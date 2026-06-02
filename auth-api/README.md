@@ -57,12 +57,6 @@ Start the server:
 npm run dev
 ```
 
-or
-
-```bash
-npm start
-```
-
 
 ## Project Structure
 
