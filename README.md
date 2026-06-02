@@ -1,4 +1,4 @@
-# 🛒 Fast Grocery - Full Stack Grocery Store
+# Fast Grocery - Full Stack Grocery Store
 
 A full-stack grocery shopping application built using **Next.js**, **Node.js**, **Express.js**, and **MongoDB**.
 
@@ -6,7 +6,7 @@ Users can browse products, register/login securely, manage their cart, place ord
 
 ---
 
-## 🚀 Features
+##  Features
 
 ### Authentication
 
@@ -43,7 +43,7 @@ Users can browse products, register/login securely, manage their cart, place ord
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 
@@ -121,5 +121,3 @@ Users can browse products, register/login securely, manage their cart, place ord
 
 ---
 
-
-Built as a Full Stack Web Development project using Next.js, Express.js, and MongoDB.
