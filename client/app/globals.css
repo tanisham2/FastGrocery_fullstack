@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fdf4ee;
+  background: linear-gradient(to right, #fff7ed, #ffedd5);
+  color: #1a1a1a;
+}
