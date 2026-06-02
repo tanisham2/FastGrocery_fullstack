@@ -2,8 +2,6 @@
 
 Backend API for the Fast Grocery full-stack application.
 
-Built using Node.js, Express.js, MongoDB, and JWT authentication.
-
 ## Features
 
 * User Authentication & Authorization
