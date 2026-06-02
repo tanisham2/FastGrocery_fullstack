@@ -1,74 +1,80 @@
-# Auth API Backend
+# Fast Grocery Backend API
 
-This is a  backend authentication API project built during my internship in STPL.
+Backend API for the Fast Grocery full-stack application.
 
-This project includes secure user authentication features with proper backend folder structure, middleware, validation, OTP-based password reset flow, and API documentation.
-
+Built using Node.js, Express.js, MongoDB, and JWT authentication.
 
 ## Features
 
-- User Registration API
-- User Login API
-- Forgot Password API (OTP via Email)
-- Reset Password API
-- JWT Authentication
-- Password Hashing using bcrypt
-- MongoDB Database Integration
-- Swagger API Documentation
-- Input Validation Middleware
-- OTP Expiry System
-- Secure Environment Variables using `.env`
+* User Authentication & Authorization
+* OTP-Based Password Reset
+* Product and Cart Management
+* Order Processing
+* MongoDB Integration
+* Swagger API Documentation
 
 
 ## Tech Stack
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT
-- bcryptjs
-- Nodemailer
-- Swagger UI
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT
+* bcryptjs
+* Nodemailer
+* Swagger UI
 
+## API Modules
 
-## APIs Included
+The backend currently provides **17 REST APIs** across the following modules:
 
-1. Register User
-```http
-POST /api/auth/register
-```
+* Authentication APIs
+* Product APIs
+* Cart APIs
+* Order APIs
+* User APIs
 
+## API Documentation
 
-2. Login User
-```http
-POST /api/auth/login
-```
+Swagger documentation is available at:
 
-3. Forget Password (Send OTP)
-```http
-POST /api/auth/forget-password
-```
-
-4. Update Password
-```http
-POST /api/auth/update-password
-```
-
-# Swagger Documentation
-Run the server and open:
+```text
 http://localhost:5000/api-docs
+```
 
+## Run Locally
 
-# Run Locally
-1. Install dependencies:
-```http
+Install dependencies:
+
+```bash
 npm install
 ```
 
-3. Start server:
-```http
+Start the server:
+
+```bash
 npm run dev
+```
+
+or
+
+```bash
+npm start
+```
+
+
+## Project Structure
+
+```text
+src
+├── config
+├── controllers
+├── middlewares
+├── models
+├── routes
+├── services
+└── index.js
 ```
 
 
