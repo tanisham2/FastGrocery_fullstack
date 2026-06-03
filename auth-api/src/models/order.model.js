@@ -32,7 +32,7 @@ const orderSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,   // fix: was default: true which is wrong
+      required: true,   
     },
     status: {
       type: String,

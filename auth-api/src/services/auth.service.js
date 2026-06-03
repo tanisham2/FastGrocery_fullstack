@@ -10,7 +10,7 @@ const register = async ({ name, email, password }) => {
   const hashed = await bcrypt.hash(password, 12);
   const user = await User.create({ name, email, password: hashed });
 
-  return { id: user._id, name: user.name, email: user.email };
+  return { id: user._id, name: user.name, email: user.email, role: user.role };
 };
 
 const login = async ({ email, password }) => {
@@ -26,7 +26,7 @@ const login = async ({ email, password }) => {
 
   const token = jwt.sign(
     { 
-      id: user._id, email: user.email },
+      id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
     { 
       expiresIn: process.env.JWT_EXPIRES_IN }
@@ -34,7 +34,12 @@ const login = async ({ email, password }) => {
 
   return { 
     token, 
-    user: { id: user._id, name: user.name, email: user.email } };
+    user: { 
+      id: user._id, 
+      name: user.name, 
+      email: user.email,
+      role: user.role
+     }};
 };
 
 const { sendOTPEmail } = require('../config/mailer');

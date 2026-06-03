@@ -19,7 +19,8 @@ export default function Navbar() {
       setUser(null);
     }
   }, [pathname]); // re-runs on every page chang
-  if (pathname === '/') return null;
+
+  if (pathname === '/' || pathname.startsWith('/admin')) return null;
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -48,6 +49,10 @@ export default function Navbar() {
       </Link>
 
       <div style={{ flex: 1 }} />
+      <Link href="/" style={{
+        color: '#fff', fontSize: '16px', fontWeight: 500, textDecoration: 'none',
+        borderBottom: pathname === '/' ? '2px solid #f8d030' : 'none', paddingBottom: '2px'
+        }}> Home </Link>
 
       <Link href="/orders" style={{
         color: '#fff', fontSize: '14px', fontWeight: 500,
