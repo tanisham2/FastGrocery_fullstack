@@ -58,34 +58,131 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow p-8 mt-10 border border-orange-100">
-      <h2 className="text-2xl font-bold text-gray-800 mb-2">Forgot Password</h2>
-      <p className="text-sm text-gray-500 mb-6">
+  <div
+    style={{
+      minHeight: '100vh',
+      background: '#f8d030',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '40px',
+    }}
+  >
+    <div
+      style={{
+        background: '#fff',
+        width: '100%',
+        maxWidth: '750px',
+        borderRadius: '20px',
+        padding: '50px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+        border: '1px solid #eee',
+      }}
+    >
+      <h2
+        style={{
+          fontSize: '36px',
+          fontWeight: '700',
+          color: '#1a1a1a',
+          marginBottom: '10px',
+        }}
+      >
+        Forgot Password
+      </h2>
+
+      <p
+        style={{
+          color: '#666',
+          fontSize: '16px',
+          marginBottom: '24px',
+        }}
+      >
         {step === 1 && 'Enter your email to receive an OTP.'}
-        {step === 2 && 'Enter the OTP sent to your email and set a new password.'}
-        {step === 3 && 'All done!'}
+        {step === 2 && 'Enter the OTP and create a new password.'}
+        {step === 3 && 'Password updated successfully.'}
       </p>
 
-      {message && <p className="bg-green-50 text-green-700 border border-green-200 rounded-lg p-3 mb-4 text-sm">{message}</p>}
-      {error && <p className="bg-red-50 text-red-700 border border-red-200 rounded-lg p-3 mb-4 text-sm">{error}</p>}
+      {message && (
+        <div
+          style={{
+            background: '#f0fff4',
+            color: '#2f855a',
+            border: '1px solid #9ae6b4',
+            padding: '12px',
+            borderRadius: '8px',
+            marginBottom: '16px',
+          }}
+        >
+          {message}
+        </div>
+      )}
+
+      {error && (
+        <div
+          style={{
+            background: '#fff5f5',
+            color: '#e53e3e',
+            border: '1px solid #fed7d7',
+            padding: '12px',
+            borderRadius: '8px',
+            marginBottom: '16px',
+          }}
+        >
+          {error}
+        </div>
+      )}
 
       {step === 1 && (
-        <form onSubmit={handleSendOTP} className="flex flex-col gap-4">
+        <form
+          onSubmit={handleSendOTP}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
           <div>
-            <label className="text-sm font-medium text-gray-700">Email address</label>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '6px',
+                fontSize: '14px',
+                fontWeight: '600',
+              }}
+            >
+              Email Address
+            </label>
+
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="tanisha@example.com"
               required
-              className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              style={{
+                width: '100%',
+                padding: '14px',
+                border: '1px solid #ddd',
+                borderRadius: '10px',
+                fontSize: '14px',
+                boxSizing: 'border-box',
+              }}
             />
           </div>
+
           <button
             type="submit"
             disabled={loading}
-            className="bg-orange-600 text-white py-2 rounded-lg font-medium hover:bg-orange-700 transition disabled:opacity-50"
+            style={{
+              background: '#1AA7A8',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '10px',
+              padding: '14px',
+              fontSize: '15px',
+              fontWeight: '700',
+              cursor: loading ? 'not-allowed' : 'pointer',
+            }}
           >
             {loading ? 'Sending OTP...' : 'Send OTP'}
           </button>
@@ -93,44 +190,87 @@ export default function ForgotPasswordPage() {
       )}
 
       {step === 2 && (
-        <form onSubmit={handleUpdatePassword} className="flex flex-col gap-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700">OTP</label>
-            <input
-              type="text"
-              value={form.otp}
-              onChange={(e) => setForm({ ...form, otp: e.target.value })}
-              placeholder="Enter 6-digit OTP"
-              required
-              className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700">New Password</label>
-            <input
-              type="password"
-              value={form.newPassword}
-              onChange={(e) => setForm({ ...form, newPassword: e.target.value })}
-              placeholder="••••••••"
-              required
-              className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700">Confirm Password</label>
-            <input
-              type="password"
-              value={form.confirmPassword}
-              onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
-              placeholder="••••••••"
-              required
-              className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
-          </div>
+        <form
+          onSubmit={handleUpdatePassword}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Enter 6-digit OTP"
+            value={form.otp}
+            onChange={(e) =>
+              setForm({ ...form, otp: e.target.value })
+            }
+            required
+            style={{
+              width: '100%',
+              padding: '14px',
+              border: '1px solid #ddd',
+              borderRadius: '10px',
+              fontSize: '14px',
+              boxSizing: 'border-box',
+            }}
+          />
+
+          <input
+            type="password"
+            placeholder="New Password"
+            value={form.newPassword}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                newPassword: e.target.value,
+              })
+            }
+            required
+            style={{
+              width: '100%',
+              padding: '14px',
+              border: '1px solid #ddd',
+              borderRadius: '10px',
+              fontSize: '14px',
+              boxSizing: 'border-box',
+            }}
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={form.confirmPassword}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                confirmPassword: e.target.value,
+              })
+            }
+            required
+            style={{
+              width: '100%',
+              padding: '14px',
+              border: '1px solid #ddd',
+              borderRadius: '10px',
+              fontSize: '14px',
+              boxSizing: 'border-box',
+            }}
+          />
+
           <button
             type="submit"
             disabled={loading}
-            className="bg-orange-600 text-white py-2 rounded-lg font-medium hover:bg-orange-700 transition disabled:opacity-50"
+            style={{
+              background: '#1AA7A8',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '10px',
+              padding: '14px',
+              fontSize: '15px',
+              fontWeight: '700',
+              cursor: loading ? 'not-allowed' : 'pointer',
+            }}
           >
             {loading ? 'Updating...' : 'Update Password'}
           </button>
@@ -140,11 +280,21 @@ export default function ForgotPasswordPage() {
       {step === 3 && (
         <a
           href="/login"
-          className="block text-center bg-orange-600 text-white py-2 rounded-lg font-medium hover:bg-orange-700 transition"
+          style={{
+            display: 'block',
+            textAlign: 'center',
+            background: '#1AA7A8',
+            color: '#fff',
+            padding: '14px',
+            borderRadius: '10px',
+            textDecoration: 'none',
+            fontWeight: '700',
+          }}
         >
-          Go to Login
+          Go To Login
         </a>
       )}
     </div>
-  );
+  </div>
+);
 }

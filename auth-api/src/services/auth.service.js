@@ -24,8 +24,7 @@ const login = async ({ email, password }) => {
     throw new Error('Invalid credentials');
   }
 
-  const token = jwt.sign(
-    { 
+  const token = jwt.sign({ 
       id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
     { 

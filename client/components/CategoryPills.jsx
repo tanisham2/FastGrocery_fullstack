@@ -15,8 +15,8 @@ export default function CategoryPills({ categories, active, onChange }) {
           style={{
             display: "flex", alignItems: "center", gap: "6px",
             background: active === cat ? "#e8f5e9" : "#fff",
-            border: active === cat ? "1.5px solid #0c831f" : "1.5px solid #e0e0e0",
-            color: active === cat ? "#0c831f" : "#333",
+            border: active === cat ? "1.5px solid #1d2bc7" : "1.5px solid #e0e0e0",
+            color: active === cat ? "#2d52c9" : "#333",
             borderRadius: "999px", padding: "6px 14px",
             fontSize: "13px", fontWeight: 500,
             cursor: "pointer", whiteSpace: "nowrap"

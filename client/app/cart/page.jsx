@@ -71,11 +71,19 @@ export default function CartPage() {
     const items = cartItems.map((item) => ({
       productId: item.productId?._id || item.productId,
       quantity: item.quantity,
-      price: item.productId?.price || item.price || 0,
+      price:
+      item.productId?.salePrice ??
+      item.productId?.price ??
+      item.price ??
+      0,
     }));
 
     const finalTotal = cartItems.reduce((sum, item) => {            //recalculate total to ensure accuracy
-      const price = item.productId?.price || item.price || 0;
+      const price = 
+      item.productId?.salePrice ??
+      item.productId?.price ??
+      item.price ??
+      0;
       return sum + price * item.quantity;
     }, 0);
 
@@ -107,17 +115,18 @@ export default function CartPage() {
     }
   };
 
-  const totalAmount = cartItems.reduce((sum, item) => {
-    const price = item.productId?.price || item.price || 0;
-    return sum + price * item.quantity;
-  }, 0);
+const totalAmount = cartItems.reduce((sum, item) => {
+  const product = item.productId || {};
+  const price = product.salePrice ?? product.price ?? item.price ?? 0;
+  return sum + price * item.quantity;
+}, 0);
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   
   if (orderSuccess) {
     return (
-      <div style={{ minHeight: "100vh", background: "#f5f5f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ background: "#fff", borderRadius: "16px", padding: "48px 40px", textAlign: "center", maxWidth: "400px", border: "0.5px solid #e8e8e8" }}>
+      <div style={{ minHeight: "100vh", background: "rgb(228, 228, 49)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ background: "rgb(243, 243, 240)", borderRadius: "16px", padding: "48px 40px", textAlign: "center", maxWidth: "400px", border: "0.5px solid #e8e8e8" }}>
           <div style={{ fontSize: "64px", marginBottom: "16px" }}>🎉</div>
           <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#1a1a1a", marginBottom: "8px" }}>Order Placed!</h2>
           <p style={{ color: "#888", fontSize: "14px", marginBottom: "8px" }}>

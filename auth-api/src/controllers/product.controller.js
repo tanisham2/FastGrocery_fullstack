@@ -2,18 +2,33 @@ const Product = require('../models/product.model');
 
 const createProduct = async (req, res) => {               //add product
   try {
-    const product = await Product.create(req.body);
+    const { name, realPrice, salePrice, category, description, stock, imageUrl } = req.body;
 
-    res.status(201).json({
-      success: true,
-      message: 'Product created successfully',
-      product,
+    if (!name || !realPrice || !salePrice || !category) {
+      return res.status(400).json({ 
+        success: false, message: 'name, realPrice, salePrice and category are required' 
+      });
+    }
+    if (Number(salePrice) > Number(realPrice)) {
+      return res.status(400).json({ 
+        success: false, message: 'salePrice cannot be greater than realPrice' 
+      });
+    }
+
+    const product = new Product({ name, 
+      realPrice: Number(realPrice), 
+      salePrice: Number(salePrice), 
+      category, 
+      description: description || '', stock: Number(stock) || 0, imageUrl: imageUrl || '' 
+    });
+    await product.save();
+    res.status(201).json({ 
+      success: true, data: product 
     });
   } 
-  catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
+  catch (err) {
+    res.status(400).json({ 
+      success: false, message: err.message 
     });
   }
 };
@@ -61,32 +76,28 @@ const getSingleProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {                 //edit product
   try {
-    const product = await Product.findByIdAndUpdate(         //find the product by id+change it with the new data from req.body
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const { realPrice, salePrice } = req.body;
 
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found',
+    if (realPrice && salePrice && Number(salePrice) > Number(realPrice)) {
+      return res.status(400).json({ 
+        success: false, message: 'salePrice cannot be greater than realPrice' 
       });
     }
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { 
+      new: true, runValidators: true 
+    });
+    if (!product) 
+      return res.status(404).json({
+        success: false, message: 'Product not found'
+      });
 
-    res.status(200).json({
-      success: true,
-      message: 'Product updated successfully',
-      product,
+    res.status(200).json({ 
+      success: true, data: product 
     });
   } 
-  catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
+  catch (err) {
+    res.status(400).json({ 
+      success: false, message: err.message 
     });
   }
 };

@@ -1,84 +1,119 @@
-'use client';             //client-side rendering for this page
+'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function LoginPage() {           //login page component
-  const router = useRouter();                   //router object for navigation
-  const [form, setForm] = useState({ email: '', password: '' });       //stores form data
-  const [error, setError] = useState('');          //stores error message
-  const [loading, setLoading] = useState(false);      //stores loading state
+export default function LoginPage() {
+  const router = useRouter();
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });   //updates form state on input change
+  const validate = () => {
+    const e = {};
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Enter a valid email address';
+    if (form.password.length < 6) e.password = 'Password must be at least 6 characters';
+    return e;
+  };
 
-  const handleSubmit = async (e) => {             //handles form submission
-    e.preventDefault();                           //prevents default form submission behavior
-    setLoading(true);                            //stops page from refreshing
-    setError('');                                //resets error message
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
+    const e = validate();
+    if (Object.keys(e).length) { setErrors(e); return; }
+    setErrors({});
+    setLoading(true);
+    setServerError('');
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {    //sends POST request to login endpoint      
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
-
     const data = await res.json();
     setLoading(false);
 
     if (data.success) {
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("userId", data.data.user.id);
+      localStorage.setItem('token', data.data.token);
+      localStorage.setItem('userId', data.data.user.id);
       localStorage.setItem('userName', data.data.user.name);
-      router.push('/users');
-    } 
-    else {
-      setError(data.message);
+      router.push('/');
+    } else {
+      setServerError(data.message || 'Login failed');
     }
   };
 
+  const Field = ({ label, name, type = 'text', placeholder }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <label style={{ fontSize: '13px', fontWeight: 600, color: '#444' }}>{label}</label>
+      <input
+        name={name} type={type} placeholder={placeholder}
+        value={form[name]}
+        onChange={(e) => setForm({ ...form, [name]: e.target.value })}
+        style={{
+          padding: '11px 14px', border: `1.5px solid ${errors[name] ? '#e53e3e' : '#e0e0e0'}`,
+          borderRadius: '8px', fontSize: '14px', outline: 'none', color: '#333',
+        }}
+        onFocus={(e) => e.target.style.borderColor = '#0f69c4'}
+        onBlur={(e) => e.target.style.borderColor = errors[name] ? '#e53e3e' : '#e0e0e0'}
+      />
+      {errors[name] && <span style={{ fontSize: '12px', color: '#e53e3e' }}>{errors[name]}</span>}
+    </div>
+  );
+
   return (
-    <div className="bg-white rounded-xl shadow p-8 mt-10">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">User Login</h2>
-
-      {error && <p className="bg-red-50 text-red-700 border border-red-200 rounded p-3 mb-4 text-sm">{error}</p>}
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
-          <label className="text-sm font-medium text-gray-700">Email</label>
-          <input
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="tanisha22@gmail.com"
-            required
-            className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
-          />
+    <div
+    style={{
+    minHeight: '100vh',
+    background: '#f8d030',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px',
+  }}
+    >
+   <div   style={{
+  background: '#fff',
+  borderRadius: '20px',
+  border: '1px solid #eee',
+  padding: '50px',
+  width: '100%',
+  maxWidth: '550px',
+  boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+}}
+>
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+          <div style={{ fontSize: '30px', marginBottom: '8px' }}>👋</div>
+          <h2 style={{ fontSize: '22px', fontWeight: 700, color: '#1a1a1a', margin: 0 }}>Welcome back</h2>
+          <p style={{ fontSize: '16px', color: '#888', marginTop: '4px' }}>Login to your account</p>
         </div>
-        <div>
-          <label className="text-sm font-medium text-gray-700">Password</label>
-          <input
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleChange}
-            placeholder="••••••••"
-            required
-            className="w-full mt-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-orange-600 text-white py-2 rounded-lg font-medium hover:bg-orange-700 transition disabled:opacity-50"
-        >
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
 
-      <p className="text-sm text-gray-500 mt-4 text-center">
-        Forgot password?{' '}
-        <a href="/forgot-password" className="text-orange-600 hover:underline">Reset it here</a>
-      </p>
+        {serverError && (
+          <div style={{ background: '#fff5f5', border: '1px solid #fed7d7', borderRadius: '8px', padding: '10px 14px', marginBottom: '16px', fontSize: '13px', color: '#e53e3e' }}>
+            {serverError}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <Field label="Email address" name="email" type="email" placeholder="you@example.com" />
+          <Field label="Password" name="password" type="password" placeholder="••••••••" />
+
+          <button type="submit" disabled={loading} style={{
+            background: loading ? '#aaa' : '#1f8fe6', color: '#fff', border: 'none',
+            borderRadius: '8px', padding: '13px', fontSize: '15px', fontWeight: 700,
+            cursor: loading ? 'not-allowed' : 'pointer', marginTop: '4px',
+          }}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+
+        <p style={{ textAlign: 'center', fontSize: '13px', color: '#888', marginTop: '20px' }}>
+          Don't have an account?{' '}
+          <a href="/register" style={{ color: '#1262cc', fontWeight: 600, textDecoration: 'none' }}>Register here</a>
+        </p>
+        <p style={{ textAlign: 'center', fontSize: '13px', color: '#888', marginTop: '8px' }}>
+          <a href="/forgot-password" style={{ color: '#0c2abd', textDecoration: 'none' }}>Forgot password?</a>
+        </p>
+      </div>
     </div>
   );
 }

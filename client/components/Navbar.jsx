@@ -33,7 +33,7 @@ export default function Navbar() {
 
   return (
     <nav style={{
-      background: '#1870af',
+      background: '#1AA7A8',
       padding: '12px 24px',
       display: 'flex',
       alignItems: 'center',
@@ -65,7 +65,7 @@ export default function Navbar() {
 
       <Link href="/cart" style={{
         display: 'flex', alignItems: 'center', gap: '6px',
-        background: '#fff', color: '#1551db',
+        background: '#fff', color: '#1AA7A8',
         fontWeight: 700, fontSize: '14px',
         borderRadius: '8px', padding: '8px 16px',
         textDecoration: 'none', whiteSpace: 'nowrap'
@@ -120,7 +120,9 @@ export default function Navbar() {
           borderRadius: '8px', padding: '8px 16px',
           textDecoration: 'none', whiteSpace: 'nowrap'
         }}>
-          Login
+        <div style={{ display: 'flex', gap: '8px' }}>
+           Login
+           </div>
         </Link>
       )}
     </nav>

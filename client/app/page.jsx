@@ -115,7 +115,7 @@ const handleUpdateQty = async (productId, delta) => {
   }, 0);
 
   return (
-    <div style={{ minHeight: "200vh", background: "#f5f5f0" }}>
+    <div style={{ minHeight: "200vh", background: "rgb(231, 231, 69)" }}>
 
       {/* Full-width green topbar */}
       <header style={{
@@ -180,7 +180,7 @@ const handleUpdateQty = async (productId, delta) => {
           🛒 My Cart
           {cartCount > 0 && (
             <span style={{
-              background: "#0c831f", color: "#fff",
+              background: "#2c7bc9", color: "#fff",
               fontSize: "11px", fontWeight: 700,
               borderRadius: "50%", width: "20px", height: "20px",
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -206,7 +206,7 @@ const handleUpdateQty = async (productId, delta) => {
           {activeCategory === "All" ? "All Products" : activeCategory}
           <span style={{
             marginLeft: "8px", fontSize: "11px", fontWeight: 600,
-            background: "#fff3cd", color: "#856404",
+            background: "#f2f3e7", color: "#856404",
             padding: "2px 8px", borderRadius: "999px",
           }}>
             {filtered.length} items
@@ -262,7 +262,7 @@ function SkeletonGrid() {
     }}>
       {Array(10).fill(0).map((_, i) => (
         <div key={i} style={{
-          background: "#fff", borderRadius: "12px",
+          background: "#ebede3", borderRadius: "12px",
           border: "0.5px solid #e8e8e8", overflow: "hidden",
         }}>
           <div style={{ height: "130px", background: "#f0f0f0", animation: "pulse 1.5s infinite" }} />
@@ -341,7 +341,7 @@ function LoginButton({ router }) {
     <button
       onClick={() => router.push("/login")}
       style={{
-        background: "#fff", color: "#0c831f",
+        background: "#fff", color: "#1d94da",
         fontWeight: 700, fontSize: "14px",
         border: "none", borderRadius: "8px",
         padding: "10px 18px", cursor: "pointer",
