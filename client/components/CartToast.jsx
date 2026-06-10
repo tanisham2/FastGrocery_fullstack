@@ -7,13 +7,13 @@ export default function CartToast({ count, total, onClick }) {
       style={{
         position: "fixed", bottom: "1rem",
         left: "50%", transform: "translateX(-50%)",
-        background: "#0c831f", color: "#fff",
+        background: "#0a71ed", color: "#fff",
         borderRadius: "12px", padding: "12px 24px",
         display: "flex", alignItems: "center",
         justifyContent: "space-between", gap: "3rem",
         cursor: "pointer", zIndex: 100,
         minWidth: "280px",
-        boxShadow: "0 4px 20px rgba(12,131,31,0.4)"
+        boxShadow: "0 4px 20px rgba(10, 33, 236, 0.4)"
       }}
     >
       <div>

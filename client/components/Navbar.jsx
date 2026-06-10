@@ -65,7 +65,7 @@ export default function Navbar() {
 
       <Link href="/cart" style={{
         display: 'flex', alignItems: 'center', gap: '6px',
-        background: '#fff', color: '#1AA7A8',
+        background: '#fff', color: '#000707',
         fontWeight: 700, fontSize: '14px',
         borderRadius: '8px', padding: '8px 16px',
         textDecoration: 'none', whiteSpace: 'nowrap'
@@ -102,13 +102,13 @@ export default function Navbar() {
                 onClick={() => setShowDropdown(false)}
                 style={{ display: 'block', padding: '12px 16px', fontSize: '14px', color: '#1a1a1a', textDecoration: 'none', borderBottom: '0.5px solid #f0f0f0' }}
               >
-                📦 My Orders
+                 My Orders
               </Link>
               <button
                 onClick={handleLogout}
                 style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 16px', fontSize: '14px', color: '#e53e3e', background: 'none', border: 'none', cursor: 'pointer' }}
               >
-                🚪 Logout
+                 Logout
               </button>
             </div>
           )}

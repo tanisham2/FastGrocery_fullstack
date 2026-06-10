@@ -117,7 +117,7 @@ const handleUpdateQty = async (productId, delta) => {
   return (
     <div style={{ minHeight: "200vh", background: "rgb(231, 231, 69)" }}>
 
-      {/* Full-width green topbar */}
+      {/* Full-width blue topbar */}
       <header style={{
         background: "#21969c",
         padding: "12px 14px",
@@ -170,7 +170,7 @@ const handleUpdateQty = async (productId, delta) => {
           onClick={() => router.push("/cart")}
           style={{
             display: "flex", alignItems: "center", gap: "8px",
-            background: "#fff", color: "#effb0e",
+            background: "#fff", color: "#1b1d00",
             fontWeight: 700, fontSize: "16px",
             border: "none", borderRadius: "8px",
             padding: "10px 18px", cursor: "pointer",
@@ -180,7 +180,7 @@ const handleUpdateQty = async (productId, delta) => {
           🛒 My Cart
           {cartCount > 0 && (
             <span style={{
-              background: "#2c7bc9", color: "#fff",
+              background: "#eee603", color: "#fff",
               fontSize: "11px", fontWeight: 700,
               borderRadius: "50%", width: "20px", height: "20px",
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -321,15 +321,18 @@ function LoginButton({ router }) {
           }}>
             <button
               onClick={() => { router.push("/orders"); setShowDropdown(false); }}
-              style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 16px", fontSize: "14px", color: "#1a1a1a", background: "none", border: "none", borderBottom: "0.5px solid #f0f0f0", cursor: "pointer" }}
+              style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 16px", 
+                fontSize: "14px", color: "#1a1a1a", background: "none", border: "none", 
+                borderBottom: "0.5px solid #f0f0f0", cursor: "pointer" }}
             >
-              📦 My Orders
+               My Orders
             </button>
             <button
               onClick={handleLogout}
-              style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 16px", fontSize: "14px", color: "#e53e3e", background: "none", border: "none", cursor: "pointer" }}
+              style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 16px", 
+                fontSize: "14px", color: "#e53e3e", background: "none", border: "none", cursor: "pointer" }}
             >
-              🚪 Logout
+               Logout
             </button>
           </div>
         )}
