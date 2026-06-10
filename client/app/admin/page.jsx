@@ -147,7 +147,7 @@ export default function AdminPage() {
   const resetForm = () => {
     setProductForm({ 
       name: "", realPrice: "", salePrice: "", category: "", shortDescription: "", description: "", stock: "", 
-      images: p.images || (p.imageUrl ? [p.imageUrl] : []), 
+      images: [], 
     });
     setNewImageUrl("");
     setEditingProduct(null);
@@ -234,7 +234,7 @@ export default function AdminPage() {
               onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
               style={{ padding: "12px 14px", border: "1.5px solid #e0e0e0", borderRadius: "8px", fontSize: "14px", outline: "none" }} />
             {loginError && <p style={{ color: "#e53e3e", fontSize: "13px", margin: 0 }}>{loginError}</p>}
-            <button type="submit" style={{ background: "#0c831f", color: "#fff", border: "none", borderRadius: "8px", padding: "13px", fontSize: "15px", fontWeight: 700, cursor: "pointer" }}>
+            <button type="submit" style={{ background: "#0a3de6", color: "#fff", border: "none", borderRadius: "8px", padding: "13px", fontSize: "15px", fontWeight: 700, cursor: "pointer" }}>
               Login
             </button>
           </form>
@@ -246,16 +246,16 @@ export default function AdminPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f0" }}>
       {/* Header */}
-      <header style={{ background: "#0c831f", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <header style={{ background: "#0777e6", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ fontSize: "20px", fontWeight: 800, color: "#fff" }}>
-          🛒 blink<span style={{ color: "#f8d030" }}>it</span>
+          🛒 Fast<span style={{ color: "#f8d030" }}>Grocery</span>
           <span style={{ fontSize: "13px", fontWeight: 400, opacity: 0.8, marginLeft: "8px" }}>Admin</span>
         </div>
         <div style={{ display: "flex", gap: "8px" }}>
           {TABS.map((t) => (
             <button key={t} onClick={() => setTab(t)} style={{
               background: tab === t ? "#fff" : "rgba(255,255,255,0.15)",
-              color: tab === t ? "#0c831f" : "#fff",
+              color: tab === t ? "#1e29ee" : "#fff",
               border: "none", borderRadius: "8px", padding: "8px 16px",
               fontSize: "13px", fontWeight: 600, cursor: "pointer",
             }}>{t}</button>
@@ -325,7 +325,7 @@ export default function AdminPage() {
               </h2>
               <button
                 onClick={() => { resetForm(); setShowProductForm(true); }}
-                style={{ background: "#0c831f", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontWeight: 700, cursor: "pointer" }}
+                style={{ background: "#0325e9", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontWeight: 700, cursor: "pointer" }}
               >
                 + Add Product
               </button>
@@ -440,63 +440,88 @@ export default function AdminPage() {
                 onChange={(e) => setProductForm({ 
                   ...productForm, description: e.target.value })}
                   rows={4}
-                  style={{ width: "100%", marginTop: "8px", padding: "10px 12px", border: "1.5px solid #e0e0e0", borderRadius: "8px", fontSize: "14px", outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }}
+                  style={{ width: "100%", marginTop: "8px", padding: "10px 12px", border: "1.5px solid #e0e0e0", 
+                    borderRadius: "8px", fontSize: "14px", outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }}
                   />
 
-                {/* Image Gallery Manager */}
-                <div style={{ marginTop: "16px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 600, color: "#444", marginBottom: "10px" }}>
-                    Product Images ({productForm.images.length}) — First image is the primary display image
-                  </p>
+{/* Image Gallery Manager */}
+<div style={{ marginTop: "16px" }}>
+  <p style={{ fontSize: "13px", fontWeight: 600, color: "#444", marginBottom: "10px" }}>
+    Product Images ({productForm.images.length}) — First image is the primary display image
+  </p>
 
-                  {/* Existing images */}
-                  {productForm.images.length > 0 && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "12px" }}>
-                      {productForm.images.map((img, idx) => (
-                        <div key={idx} style={{ position: "relative", border: idx === 0 ? "2px solid #0c831f" : "1.5px solid #e0e0e0", borderRadius: "8px", overflow: "hidden", width: "80px", height: "80px" }}>
-                          <img src={img} alt={`img-${idx}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { e.target.src = ""; }} />
-                          {idx === 0 && (
-                            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#0c831f", color: "#fff", fontSize: "9px", fontWeight: 700, textAlign: "center", padding: "2px" }}>MAIN</div>
-                          )}
-                          <div style={{ position: "absolute", top: 0, right: 0, display: "flex", flexDirection: "column", gap: "1px" }}>
-                            <button onClick={() => handleRemoveImage(idx)}
-                              style={{ background: "rgba(229,62,62,0.9)", color: "#fff", border: "none", width: "18px", height: "18px", fontSize: "11px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>×</button>
-                          </div>
-                          <div style={{ position: "absolute", bottom: idx === 0 ? "16px" : "0", left: 0, display: "flex", gap: "1px" }}>
-                            {idx > 0 && <button onClick={() => handleMoveImage(idx, -1)} style={{ background: "rgba(0,0,0,0.5)", color: "#fff", border: "none", width: "16px", height: "16px", fontSize: "10px", cursor: "pointer" }}>←</button>}
-                            {idx < productForm.images.length - 1 && <button onClick={() => handleMoveImage(idx, 1)} style={{ background: "rgba(0,0,0,0.5)", color: "#fff", border: "none", width: "16px", height: "16px", fontSize: "10px", cursor: "pointer" }}>→</button>}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+  {/* Existing images */}
+  {productForm.images.length > 0 && (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "12px" }}>
+      {productForm.images.map((img, idx) => (
+        <div key={idx} style={{ position: "relative", border: idx === 0 ? "2px solid #370de0" : "1.5px solid #e0e0e0", 
+        borderRadius: "8px", overflow: "hidden", width: "80px", height: "80px" }}>
+          <img src={img} alt={`img-${idx}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+          onError={(e) => { 
+            e.target.src = ""; 
+            }} />
+          {idx === 0 && (
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#094dd5", 
+              color: "#fff", fontSize: "9px", fontWeight: 700, textAlign: "center", padding: "2px" }}>MAIN</div>
+          )}
+          <button onClick={() => handleRemoveImage(idx)}
+            style={{ position: "absolute", top: 0, right: 0, background: "rgba(229,62,62,0.9)", color: "#fff", 
+            border: "none", width: "18px", height: "18px", fontSize: "11px", cursor: "pointer", display: "flex", 
+            alignItems: "center", justifyContent: "center" }}>×</button>
+          <div style={{ position: "absolute", bottom: idx === 0 ? "16px" : "0", left: 0, display: "flex" }}>
+            {idx > 0 && <button onClick={() => handleMoveImage(idx, -1)} style={{ background: "rgba(0,0,0,0.5)", 
+              color: "#fff", border: "none", width: "16px", height: "16px", fontSize: "10px", 
+              cursor: "pointer" }}>←</button>}
+            {idx < productForm.images.length - 1 && <button onClick={() => handleMoveImage(idx, 1)} 
+            style={{ background: "rgba(0,0,0,0.5)", color: "#fff", border: "none", width: "16px", 
+            height: "16px", fontSize: "10px", cursor: "pointer" }}>→</button>}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
 
-                  {/* Add image URL */}
-                  <div style={{ display: "flex", gap: "8px" }}>
-                    <input
-                      type="text" placeholder="Paste image URL and click Add"
-                      value={newImageUrl}
-                      onChange={(e) => setNewImageUrl(e.target.value)}
-                      onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleAddImage(); } }}
-                      style={{ flex: 1, padding: "9px 12px", border: "1.5px solid #e0e0e0", borderRadius: "8px", fontSize: "14px", outline: "none" }}
-                    />
-                    <button onClick={handleAddImage}
-                      style={{ background: "#0c831f", color: "#fff", border: "none", borderRadius: "8px", padding: "9px 18px", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>
-                      + Add Image
-                    </button>
-                  </div>
-                  <p style={{ fontSize: "11px", color: "#aaa", marginTop: "6px" }}>
-                    Tip: Paste a direct image URL (from Unsplash, imgbb, etc.) and click Add Image. Use ← → arrows to reorder. First image is the main display image.
-                  </p>
-                </div>
+  {/* Upload from computer */}
+  <div style={{ marginBottom: "10px" }}>
+    <label style={{ fontSize: "12px", fontWeight: 600, color: "#555", display: "block", marginBottom: "6px" }}>
+      📁 Upload from computer
+    </label>
+    <ImageFileUploader adminToken={adminToken} onUploaded={(url) => setProductForm(prev => ({ ...prev, 
+      images: [...prev.images, url] }))} />
+  </div>
+
+  {/* OR paste URL */}
+  <div>
+    <label style={{ fontSize: "12px", fontWeight: 600, color: "#555", display: "block", marginBottom: "6px" }}>
+      🔗 Or paste image URL
+    </label>
+    <div style={{ display: "flex", gap: "8px" }}>
+      <input
+        type="text" placeholder="https://images.unsplash.com/..."
+        value={newImageUrl}
+        onChange={(e) => setNewImageUrl(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleAddImage(); } }}
+        style={{ flex: 1, padding: "9px 12px", border: "1.5px solid #e0e0e0", borderRadius: "8px", 
+          fontSize: "14px", outline: "none" }}
+      />
+      <button onClick={handleAddImage}
+        style={{ background: "#113ae0", color: "#fff", border: "none", borderRadius: "8px", 
+        padding: "9px 18px", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>
+        + Add
+      </button>
+    </div>
+  </div>
+  </div>
 
                 <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
                   <button onClick={handleSaveProduct}
-                    style={{ background: "#0c831f", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 24px", fontWeight: 700, cursor: "pointer" }}>
+                    style={{ background: "#2e0c83", color: "#fff", border: "none", borderRadius: "8px", 
+                    padding: "10px 24px", fontWeight: 700, cursor: "pointer" }}>
                     {editingProduct ? "Update Product" : "Add Product"}
                   </button>
                   <button onClick={resetForm}
-                    style={{ background: "#f5f5f0", color: "#555", border: "none", borderRadius: "8px", padding: "10px 24px", fontWeight: 600, cursor: "pointer" }}>
+                    style={{ background: "#f5f5f0", color: "#555", border: "none", borderRadius: "8px", 
+                    padding: "10px 24px", fontWeight: 600, cursor: "pointer" }}>
                     Cancel
                   </button>
                 </div>
@@ -505,19 +530,22 @@ export default function AdminPage() {
 
             {/* Products Table */}
             {filteredProducts.length === 0 ? (
-              <div style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", padding: "60px", textAlign: "center", color: "#888" }}>
+              <div style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", 
+              padding: "60px", textAlign: "center", color: "#888" }}>
                 <div style={{ fontSize: "40px", marginBottom: "12px" }}>🔍</div>
                 <p style={{ fontSize: "16px", fontWeight: 600 }}>No products found</p>
                 <p style={{ fontSize: "13px" }}>Try adjusting your search or filters</p>
               </div>
             ) : (
               <>
-                <div style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", overflow: "hidden" }}>
+                <div style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", 
+                  overflow: "hidden" }}>
                   <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "14px" }}>
                     <thead>
                       <tr style={{ background: "#f9f9f7" }}>
                         {["Image", "Name", "Category", "Price", "Stock", "Discount", "Actions"].map((h) => (
-                          <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontWeight: 600, color: "#555", borderBottom: "0.5px solid #e8e8e8" }}>{h}</th>
+                          <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontWeight: 600, 
+                            color: "#555", borderBottom: "0.5px solid #e8e8e8" }}>{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -531,9 +559,12 @@ export default function AdminPage() {
                         return (
                           <tr key={p._id} style={{ borderBottom: "0.5px solid #f5f5f5" }}>
                             <td style={{ padding: "10px 16px" }}>
-                              <div style={{ width: "50px", height: "50px", background: "#f9f9f7", borderRadius: "8px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                              <div style={{ width: "50px", height: "50px", background: "#f9f9f7", 
+                                borderRadius: "8px", overflow: "hidden", display: "flex", alignItems: "center", 
+                                justifyContent: "center" }}>
                                 {primaryImage
-                                  ? <img src={primaryImage} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} onError={(e) => { e.target.style.display = "none"; }} />
+                                  ? <img src={primaryImage} alt={p.name} style={{ width: "100%", height: "100%", 
+                                    objectFit: "contain" }} onError={(e) => { e.target.style.display = "none"; }} />
                                   : <span style={{ fontSize: "20px" }}>🛍️</span>
                                 }
                               </div>
@@ -542,25 +573,31 @@ export default function AdminPage() {
                               )}
                             </td>
                             <td style={{ padding: "10px 16px" }}>
-                              <p style={{ margin: 0, fontWeight: 600, maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name}</p>
+                              <p style={{ margin: 0, fontWeight: 600, maxWidth: "180px", overflow: "hidden", 
+                              textOverflow: "ellipsis", 
+                                whiteSpace: "nowrap" }}>{p.name}</p>
                               <p style={{ margin: 0, fontSize: "11px", color: "#aaa" }}>ID: {p._id.slice(-6)}</p>
                             </td>
                             <td style={{ padding: "10px 16px" }}>
-                              <span style={{ background: "#e8f5e9", color: "#0c831f", fontSize: "12px", fontWeight: 600, padding: "3px 10px", borderRadius: "999px" }}>{p.category}</span>
+                              <span style={{ background: "#e8f5e9", color: "#0e5bd7", fontSize: "12px", fontWeight: 600, 
+                                padding: "3px 10px", borderRadius: "999px" }}>{p.category}</span>
                             </td>
                             <td style={{ padding: "10px 16px" }}>
                               <div style={{ fontSize: "14px", fontWeight: 700 }}>₹{salePrice}</div>
-                              {hasDiscount && <div style={{ fontSize: "12px", color: "#aaa", textDecoration: "line-through" }}>₹{realPrice}</div>}
+                              {hasDiscount && <div style={{ fontSize: "12px", color: "#aaa", 
+                                textDecoration: "line-through" }}>₹{realPrice}</div>}
                             </td>
                             <td style={{ padding: "10px 16px" }}>
-                              <span style={{ color: p.stock === 0 ? "#e53e3e" : p.stock <= 5 ? "#e67e22" : "#0c831f", fontWeight: 700 }}>{p.stock}</span>
+                              <span style={{ color: p.stock === 0 ? "#e53e3e" : p.stock <= 5 ? "#e67e22" : "#146ef4", 
+                                fontWeight: 700 }}>{p.stock}</span>
                               <div style={{ fontSize: "11px", color: "#aaa" }}>
                                 {p.stock === 0 ? "Out of stock" : p.stock <= 5 ? "Low stock" : "In stock"}
                               </div>
                             </td>
                             <td style={{ padding: "10px 16px" }}>
                               {hasDiscount
-                                ? <span style={{ background: "#e8f5e9", color: "#0c831f", fontSize: "12px", fontWeight: 700, padding: "3px 8px", borderRadius: "6px" }}>{discountPct}% OFF</span>
+                                ? <span style={{ background: "#e8f5e9", color: "#0909f3", fontSize: "12px", 
+                                  fontWeight: 700, padding: "3px 8px", borderRadius: "6px" }}>{discountPct}% OFF</span>
                                 : <span style={{ color: "#aaa", fontSize: "12px" }}>None</span>
                               }
                             </td>
@@ -581,11 +618,15 @@ export default function AdminPage() {
                                     setShowProductForm(true);
                                     window.scrollTo({ top: 0, behavior: "smooth" });
                                   }}
-                                  style={{ background: "#e3f2fd", color: "#1565c0", border: "none", borderRadius: "6px", padding: "6px 12px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
+                                  style={{ background: "#e3f2fd", color: "#1565c0", border: "none", 
+                                  borderRadius: "6px", padding: "6px 12px", fontSize: "12px", fontWeight: 600, 
+                                  cursor: "pointer" }}>
                                   Edit
                                 </button>
                                 <button onClick={() => handleDeleteProduct(p._id)}
-                                  style={{ background: "#fce4ec", color: "#c62828", border: "none", borderRadius: "6px", padding: "6px 12px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
+                                  style={{ background: "#fce4ec", color: "#c62828", border: "none", 
+                                  borderRadius: "6px", padding: "6px 12px", fontSize: "12px", fontWeight: 600, 
+                                  cursor: "pointer" }}>
                                   Delete
                                 </button>
                               </div>
@@ -599,14 +640,20 @@ export default function AdminPage() {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "20px" }}>
+                  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", 
+                  marginTop: "20px" }}>
                     <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}
-                      style={{ padding: "8px 14px", border: "1.5px solid #e0e0e0", borderRadius: "8px", background: "#fff", cursor: currentPage === 1 ? "not-allowed" : "pointer", opacity: currentPage === 1 ? 0.5 : 1 }}>
+                      style={{ padding: "8px 14px", border: "1.5px solid #e0e0e0", borderRadius: "8px", 
+                      background: "#fff", cursor: currentPage === 1 ? "not-allowed" : "pointer", 
+                      opacity: currentPage === 1 ? 0.5 : 1 }}>
                       ← Prev
                     </button>
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                       <button key={page} onClick={() => setCurrentPage(page)}
-                        style={{ padding: "8px 14px", border: "1.5px solid #e0e0e0", borderRadius: "8px", background: currentPage === page ? "#0c831f" : "#fff", color: currentPage === page ? "#fff" : "#333", fontWeight: currentPage === page ? 700 : 400, cursor: "pointer" }}>
+                        style={{ padding: "8px 14px", border: "1.5px solid #e0e0e0", borderRadius: "8px", 
+                        background: currentPage === page ? "#1223dd" : "#fff", 
+                        color: currentPage === page ? "#fff" : "#333", 
+                        fontWeight: currentPage === page ? 700 : 400, cursor: "pointer" }}>
                         {page}
                       </button>
                     ))}
@@ -630,8 +677,10 @@ export default function AdminPage() {
             <h2 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "20px" }}>Orders ({orders.length})</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {orders.map((o) => (
-                <div key={o._id} style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", overflow: "hidden" }}>
-                  <div style={{ padding: "14px 20px", borderBottom: "0.5px solid #f5f5f5", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+                <div key={o._id} style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", 
+                overflow: "hidden" }}>
+                  <div style={{ padding: "14px 20px", borderBottom: "0.5px solid #f5f5f5", display: "flex", 
+                    alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
                     <div>
                       <p style={{ margin: 0, fontWeight: 600, fontSize: "14px" }}>Order #{o._id.slice(-8).toUpperCase()}</p>
                       <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>{new Date(o.createdAt).toLocaleString("en-IN")} · {o.address}</p>
@@ -639,15 +688,19 @@ export default function AdminPage() {
                     <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                       <span style={{ fontSize: "15px", fontWeight: 700 }}>₹{o.totalAmount}</span>
                       <select value={o.status} onChange={(e) => handleOrderStatus(o._id, e.target.value)}
-                        style={{ border: "1.5px solid #e0e0e0", borderRadius: "8px", padding: "6px 10px", fontSize: "13px", fontWeight: 600, cursor: "pointer", outline: "none", background: STATUS_COLORS[o.status]?.bg, color: STATUS_COLORS[o.status]?.color }}>
+                        style={{ border: "1.5px solid #e0e0e0", borderRadius: "8px", padding: "6px 10px", 
+                        fontSize: "13px", fontWeight: 600, cursor: "pointer", outline: "none", 
+                        background: STATUS_COLORS[o.status]?.bg, color: STATUS_COLORS[o.status]?.color }}>
                         {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
                     </div>
                   </div>
                   <div style={{ padding: "12px 20px", display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     {o.items?.map((item, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", background: "#f9f9f7", borderRadius: "8px", padding: "6px 10px" }}>
-                        {item.productId?.imageUrl && <img src={item.productId.imageUrl} alt="" style={{ width: "28px", height: "28px", objectFit: "contain" }} />}
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", 
+                      background: "#f9f9f7", borderRadius: "8px", padding: "6px 10px" }}>
+                        {item.productId?.imageUrl && <img src={item.productId.imageUrl} alt="" 
+                        style={{ width: "28px", height: "28px", objectFit: "contain" }} />}
                         <span style={{ fontSize: "13px", fontWeight: 500 }}>{item.productId?.name || "Product"}</span>
                         <span style={{ fontSize: "12px", color: "#888" }}>×{item.quantity}</span>
                       </div>
@@ -663,12 +716,14 @@ export default function AdminPage() {
         {tab === "Users" && (
           <div>
             <h2 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "20px" }}>Users ({users.length})</h2>
-            <div style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", overflow: "hidden" }}>
+            <div style={{ background: "#fff", borderRadius: "12px", border: "0.5px solid #e8e8e8", 
+              overflow: "hidden" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "14px" }}>
                 <thead>
                   <tr style={{ background: "#f9f9f7" }}>
                     {["Name", "Email", "Role", "Joined", "Actions"].map((h) => (
-                      <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontWeight: 600, color: "#555", borderBottom: "0.5px solid #e8e8e8" }}>{h}</th>
+                      <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontWeight: 600, 
+                        color: "#555", borderBottom: "0.5px solid #e8e8e8" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -677,7 +732,9 @@ export default function AdminPage() {
                     <tr key={u._id} style={{ borderBottom: "0.5px solid #f5f5f5" }}>
                       <td style={{ padding: "12px 16px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                          <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#e8f5e9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: 700, color: "#0c831f" }}>
+                          <div style={{ width: "32px", height: "32px", borderRadius: "50%", 
+                            background: "#e8f5e9", display: "flex", alignItems: "center", 
+                            justifyContent: "center", fontSize: "13px", fontWeight: 700, color: "#085add" }}>
                             {u.name?.[0]?.toUpperCase()}
                           </div>
                           <span style={{ fontWeight: 600 }}>{u.name}</span>
@@ -685,7 +742,9 @@ export default function AdminPage() {
                       </td>
                       <td style={{ padding: "12px 16px", color: "#555" }}>{u.email}</td>
                       <td style={{ padding: "12px 16px" }}>
-                        <span style={{ background: u.role === "admin" ? "#fff3cd" : "#e8f5e9", color: u.role === "admin" ? "#856404" : "#0c831f", fontSize: "11px", fontWeight: 700, padding: "3px 10px", borderRadius: "999px" }}>
+                        <span style={{ background: u.role === "admin" ? "#fff3cd" : "#e8f5e9", 
+                          color: u.role === "admin" ? "#856404" : "#0e0ae2", fontSize: "11px", 
+                          fontWeight: 700, padding: "3px 10px", borderRadius: "999px" }}>
                           {u.role}
                         </span>
                       </td>
@@ -694,10 +753,12 @@ export default function AdminPage() {
                         <button onClick={async () => {
                           const newRole = u.role === "admin" ? "user" : "admin";
                           if (!confirm(`Change ${u.name}'s role to ${newRole}?`)) return;
-                          await fetch(`${API}/api/admin/users/${u._id}/role`, { method: "PATCH", headers: headers(), body: JSON.stringify({ role: newRole }) });
+                          await fetch(`${API}/api/admin/users/${u._id}/role`, { method: "PATCH", 
+                            headers: headers(), body: JSON.stringify({ role: newRole }) });
                           fetchUsers();
                         }}
-                          style={{ background: "#f5f5f0", color: "#555", border: "none", borderRadius: "6px", padding: "6px 12px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
+                          style={{ background: "#f5f5f0", color: "#555", border: "none", borderRadius: "6px", 
+                          padding: "6px 12px", fontSize: "12px", fontWeight: 600, cursor: "pointer" }}>
                           Toggle Role
                         </button>
                       </td>
@@ -716,9 +777,82 @@ export default function AdminPage() {
 // Filter tag component
 function FilterTag({ label, onRemove }) {
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "#e8f5e9", color: "#0c831f", fontSize: "12px", fontWeight: 600, padding: "3px 10px", borderRadius: "999px" }}>
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "#e8f5e9", 
+    color: "#2e0ff4", fontSize: "12px", fontWeight: 600, padding: "3px 10px", borderRadius: "999px" }}>
       {label}
-      <button onClick={onRemove} style={{ background: "none", border: "none", color: "#0c831f", cursor: "pointer", padding: 0, fontSize: "14px", lineHeight: 1 }}>×</button>
+      <button onClick={onRemove} style={{ background: "none", border: "none", color: "#0b4be1", 
+        cursor: "pointer", padding: 0, fontSize: "14px", lineHeight: 1 }}>×</button>
     </span>
+  );
+}
+
+function ImageFileUploader({ adminToken, onUploaded }) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+  const API = process.env.NEXT_PUBLIC_API_URL;
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // client-side validation
+    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!allowed.includes(file.type)) {
+      setError("Only jpg, png, webp files allowed");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("File too large. Max 5MB.");
+      return;
+    }
+
+    setError("");
+    setUploading(true);
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const res = await fetch(`${API}/api/admin/upload-image`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${adminToken}` },
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        onUploaded(data.imageUrl);
+        e.target.value = ""; // reset input
+      } else {
+        setError(data.message || "Upload failed");
+      }
+    } catch {
+      setError("Upload failed. Check your connection.");
+    }
+    setUploading(false);
+  };
+
+  return (
+    <div>
+      <label style={{
+        display: "inline-flex", alignItems: "center", gap: "8px",
+        background: uploading ? "#f0f0f0" : "#fff",
+        border: "1.5px dashed #0b3de1", borderRadius: "8px",
+        padding: "10px 16px", cursor: uploading ? "not-allowed" : "pointer",
+        fontSize: "13px", fontWeight: 600, color: "#7c0ee9",
+      }}>
+        {uploading ? "⏳ Uploading..." : "📷 Choose Image File"}
+        <input
+          type="file"
+          accept="image/jpeg,image/jpg,image/png,image/webp"
+          onChange={handleFileChange}
+          disabled={uploading}
+          style={{ display: "none" }}
+        />
+      </label>
+      <span style={{ fontSize: "11px", color: "#aaa", marginLeft: "10px" }}>
+        jpg, png, webp — max 5MB
+      </span>
+      {error && <p style={{ fontSize: "12px", color: "#e53e3e", marginTop: "4px" }}>{error}</p>}
+    </div>
   );
 }

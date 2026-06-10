@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getAllProducts, createProduct, updateProduct, deleteProduct } = require('../controllers/product.controller');
 const authenticate = require('../middlewares/auth.middleware');
+const upload = require('../middlewares/upload.middleware');
 
 /**
  * @swagger
@@ -9,6 +10,51 @@ const authenticate = require('../middlewares/auth.middleware');
  *   name: Products
  *   description: Product management endpoints (requires login)
  */
+
+/**
+ * @swagger
+ * /api/products/upload-image:
+ *   post:
+ *     summary: Upload a product image
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               images:
+ *                 type: array
+ *                 items:
+ *                  type: string
+ *                  format: binary
+ *                 
+ *     responses:
+ *       200:
+ *         description: Image uploaded successfully
+ *       400:
+ *         description: No file uploaded
+ *       401:
+ *         description: Unauthorized
+ */
+router.post('/upload-image', authenticate, upload.array('images', 10),
+  (req, res) => {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No files uploaded'
+      });
+    }
+    const imageUrls = req.files.map(
+      file => `${process.env.BASE_URL}/uploads/${file.filename}`
+    );
+    res.status(200).json({ success: true, imageUrls
+    });
+  }
+);
 
 /**
  * @swagger
@@ -45,26 +91,34 @@ router.get('/', getAllProducts);
  *               name:
  *                 type: string
  *                 example: chocolate
- *               price:
+ *               realPrice:
  *                 type: number
  *                 example: 30
+ *               salePrice:
+ *                 type: number
+ *                 example: 25
  *               category:
  *                 type: string
  *                 example: food
- *               description:
+ *               shortDescription:
  *                 type: string
  *                 example: A delicious chocolate bar
+ *               description:
+ *                 type: string
+ *                 example: Rich smooth flavor
  *               stock:
  *                 type: integer
  *                 example: 10
- *               imageUrl:
- *                type: string
- *                example: https://example.com/chocolate.jpg
+ *               images:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   example: https://example.com/chocolate.jpg
  *     responses:
  *       200:
- *         description: Filtered list of products
+ *         description: Product created successfully
  *       401:
- *         description: Unauthorized - token missing or invalid
+ *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -92,16 +146,22 @@ router.post('/', authenticate, createProduct);
  *             properties:
  *               name:
  *                 type: string
- *               price:
+ *               realPrice:
+ *                 type: number
+ *               salePrice:
  *                 type: number
  *               category:
+ *                 type: string
+ *               shortDescription:
  *                 type: string
  *               description:
  *                 type: string
  *               stock:
  *                 type: integer
- *               imageUrl:
- *                 type: string
+ *               images:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
  *         description: Product updated successfully

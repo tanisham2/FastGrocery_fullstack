@@ -5,6 +5,7 @@ const adminOnly = require('../middlewares/admin.middleware');
 const User = require('../models/user.model');
 const Product = require('../models/product.model');
 const Order = require('../models/order.model');
+const upload = require('../middlewares/upload.middleware');
 
 // All admin routes require both authenticate + adminOnly
 const guard = [authenticate, adminOnly];
@@ -105,6 +106,18 @@ router.patch('/orders/:id/status', guard, async (req, res) => {
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
   }
+});
+
+// Upload single image, returns URL
+router.post('/upload-image', guard, upload.single('image'), (req, res) => {
+  if (!req.file) 
+    return res.status(400).json({
+  success: false, message: 'No file uploaded' 
+});
+  const imageUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+  res.json({ 
+    success: true, imageUrl 
+  });
 });
 
 module.exports = router;

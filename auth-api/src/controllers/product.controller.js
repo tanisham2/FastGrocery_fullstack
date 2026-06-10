@@ -2,7 +2,7 @@ const Product = require('../models/product.model');
 
 const createProduct = async (req, res) => {               //add product
   try {
-    const { name, realPrice, salePrice, category, description, stock, imageUrl } = req.body;
+    const { name, realPrice, salePrice, category, description, stock, images } = req.body;
 
     if (!name || !realPrice || !salePrice || !category) {
       return res.status(400).json({ 
@@ -15,11 +15,14 @@ const createProduct = async (req, res) => {               //add product
       });
     }
 
-    const product = new Product({ name, 
+    const product = new Product({ 
+      name, 
       realPrice: Number(realPrice), 
       salePrice: Number(salePrice), 
       category, 
-      description: description || '', stock: Number(stock) || 0, imageUrl: imageUrl || '' 
+      description: description || '', 
+      stock: Number(stock) || 0, 
+      images: Array.isArray(images) ? images : []
     });
     await product.save();
     res.status(201).json({ 
@@ -76,7 +79,7 @@ const getSingleProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {                 //edit product
   try {
-    const { realPrice, salePrice } = req.body;
+    const { realPrice, salePrice, images } = req.body;
 
     if (realPrice && salePrice && Number(salePrice) > Number(realPrice)) {
       return res.status(400).json({ 
@@ -90,6 +93,13 @@ const updateProduct = async (req, res) => {                 //edit product
       return res.status(404).json({
         success: false, message: 'Product not found'
       });
+
+    Object.assign(product, req.body);
+
+    if (images && Array.isArray(images)) {
+      product.images = [...product.images, ...images];
+    }
+    await product.save();
 
     res.status(200).json({ 
       success: true, data: product 
