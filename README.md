@@ -1,4 +1,4 @@
-# Fast Grocery - Full Stack Grocery Store
+# FastGrocery - Full Stack Grocery Store
 
 A full-stack grocery shopping application built using **Next.js**, **Node.js**, **Express.js**, and **MongoDB**.
 
