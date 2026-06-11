@@ -36,6 +36,9 @@ export default function LoginPage() {
       localStorage.setItem('token', data.data.token);
       localStorage.setItem('userId', data.data.user.id);
       localStorage.setItem('userName', data.data.user.name);
+      localStorage.setItem('userEmail', data.data.user.email);
+      localStorage.setItem('userPhone', data.data.user.phone || '');
+      localStorage.setItem('userAddress', data.data.user.address || '');
       router.push('/');
     } else {
       setServerError(data.message || 'Login failed');
@@ -61,27 +64,15 @@ export default function LoginPage() {
   );
 
   return (
-    <div
-    style={{
-    minHeight: '100vh',
-    background: '#f8d030',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    <div style={{ minHeight: '100vh', background: '#f8d030', display: 'flex', alignItems: 'center', justifyContent: 'center',
     padding: '40px',
-  }}
-    >
-   <div   style={{
-  background: '#fff',
-  borderRadius: '20px',
-  border: '1px solid #eee',
-  padding: '50px',
-  width: '100%',
-  maxWidth: '550px',
-  boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
-}}
->
-        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+  }}> 
+  
+   <div style={{ background: '#fff', borderRadius: '20px', border: '1px solid #eee', padding: '50px', width: '100%',
+   maxWidth: '550px', boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+   }} >
+    
+    <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <div style={{ fontSize: '30px', marginBottom: '8px' }}>👋</div>
           <h2 style={{ fontSize: '22px', fontWeight: 700, color: '#1a1a1a', margin: 0 }}>Welcome back</h2>
           <p style={{ fontSize: '16px', color: '#888', marginTop: '4px' }}>Login to your account</p>

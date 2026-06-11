@@ -3,12 +3,12 @@ const Product = require('../models/product.model');
 
 const createOrder = async (req, res) => {
   try {
-    const { items, totalAmount, address } = req.body;
+    const { items, totalAmount, address, paymentMethod } = req.body;
     const userId = req.user.id;
 
-    if (!items || !totalAmount || !address) {
+    if (!items || !totalAmount || !address || !paymentMethod) {
       return res.status(400).json({ 
-        success: false, message: 'items, totalAmount and address are required' 
+        success: false, message: 'items, totalAmount, address and paymentMethod are required' 
       });
     }
 
@@ -44,7 +44,7 @@ const createOrder = async (req, res) => {
     }
 
     // Create order
-    const newOrder = new Order({ userId, items, totalAmount, address });
+    const newOrder = new Order({ userId, items, totalAmount, address, paymentMethod });
     const savedOrder = await newOrder.save();
 
     res.status(201).json({ success: true, message: 'Order created successfully', order: savedOrder });

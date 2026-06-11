@@ -29,7 +29,7 @@ const swaggerOptions = {
     info: {
       title: 'Auth API',
       version: '1.0.0',
-      description: 'Register and Login APIs with JWT',
+      description: 'APIs created for FastGrocery app; contains: auth, cart, orders, products and admin related APIs.',
     },
     servers: [{ url: `http://localhost:${process.env.PORT}` }],
     components: {

@@ -2,15 +2,28 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');               //import 'jsonwebtoken' package to: generate JWT tokens
 const User = require('../models/user.model');      //import "User model" to interact with: users collection in database
 
-const register = async ({ name, email, password }) => {
-  const existing = await User.findOne({ email });         //check if email already exists
-  if (existing) {
+const register = async ({ name, email, password, phone, address }) => {
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
     throw new Error('Email already registered');
   }
-  const hashed = await bcrypt.hash(password, 12);
-  const user = await User.create({ name, email, password: hashed });
+  const hashedPassword = await bcrypt.hash(password, 12);
 
-  return { id: user._id, name: user.name, email: user.email, role: user.role };
+  const user = new User({
+    name,
+    email,
+    password: hashedPassword,
+    phone: phone || '',
+    address: address || ''
+  });
+  await user.save();
+
+  return {
+    id: user._id,
+    name: user.name,
+    email: user.email
+  };
 };
 
 const login = async ({ email, password }) => {
@@ -37,7 +50,9 @@ const login = async ({ email, password }) => {
       id: user._id, 
       name: user.name, 
       email: user.email,
-      role: user.role
+      role: user.role,
+      phone: user.phone || '',
+      address: user.address || ''
      }};
 };
 

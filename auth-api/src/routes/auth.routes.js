@@ -113,21 +113,21 @@ router.post('/forget-password', validate(['email']), forgetPassword);
  *           schema:
  *             type: object
  *             required:
- *               - Email
- *               - OTP
- *               - New Password
- *               - Confirm Password
+ *               - email
+ *               - otp
+ *               - newPassword
+ *               - confirmPassword
  *             properties:
- *                Email:
+ *                email:
  *                 type: string
  *                 example: tanisha2@example.com
- *                OTP:
+ *                otp:
  *                 type: string
  *                 example: "482910"
- *                New Password:
+ *                newPassword:
  *                 type: string
  *                 example: newpass123
- *                Confirm Password:
+ *                confirmPassword:
  *                 type: string
  *                 example: newpass123
  *     responses:
