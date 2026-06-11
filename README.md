@@ -70,13 +70,13 @@ Users can browse products, register/login securely, manage their cart, place ord
 * Next.js
 * React
 * CSS
-* Fetch API
 
 ### Backend
 
 * Node.js
 * Express.js
 * REST API
+* Swagger
 * MongoDB
 * Mongoose
 * JWT Authentication
@@ -97,7 +97,7 @@ Users can browse products, register/login securely, manage their cart, place ord
 
 * Get Products
 * Add Product
-* Put (update) Product
+* Update Product
 * Delete Product
 * Upload image 
 
@@ -110,7 +110,7 @@ Users can browse products, register/login securely, manage their cart, place ord
 
 ### Order APIs
 
-* Get user specific Order
+* Get user Order
 * Get all Orders
 * Create new order
 
@@ -122,7 +122,7 @@ Users can browse products, register/login securely, manage their cart, place ord
 
 ---
 
-## Screens
+## User Screens
 
 * Home Page
 * Login Page
@@ -133,13 +133,19 @@ Users can browse products, register/login securely, manage their cart, place ord
 * Orders Page
 * Users Page
 
+## Admin Screens
+* Admin Login
+* Dashboard
+* Product Management
+* Order Management
+* User Management
+
 ---
 
 ## Future Improvements
 
 * Razorpay/Stripe Integration
 * Wishlist
-* Inventory Management
 * Order Tracking
 * Product Reviews & Ratings
 
