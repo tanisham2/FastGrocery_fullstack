@@ -14,7 +14,19 @@ Users can browse products, register/login securely, manage their cart, place ord
 * User Login
 * JWT-based Authentication
 * Forgot Password Support
-* Protected Routes
+* Reset Password using OTP
+
+### Admin Panel
+
+* Admin Authentication
+* Dashboard Analytics (Users, Products, Orders, Revenue)
+* Product Management (Add, Edit, Delete)
+* Inventory & Stock Management
+* Product Search, Filter & Sort
+* Image Upload Support
+* Order Management & Status Updates
+* User Management
+* Role-Based Access Control
 
 ### Products
 
@@ -29,6 +41,14 @@ Users can browse products, register/login securely, manage their cart, place ord
 * Remove products from cart
 * Update quantities
 * Cart persistence
+
+### Checkout
+
+* Billing Address support
+* Shipping Address support
+* Order Summary before purchase
+* Quantity and Total Price Calculation
+* Order Confirmation
 
 ### Orders
 
@@ -56,6 +76,7 @@ Users can browse products, register/login securely, manage their cart, place ord
 
 * Node.js
 * Express.js
+* REST API
 * MongoDB
 * Mongoose
 * JWT Authentication
@@ -75,25 +96,29 @@ Users can browse products, register/login securely, manage their cart, place ord
 ### Product APIs
 
 * Get Products
-* Create Product
-* Update Product
+* Add Product
+* Put (update) Product
 * Delete Product
+* Upload image 
 
 ### Cart APIs
 
 * Add to Cart
 * Remove from Cart
+* Clear cart
 * View Cart
 
 ### Order APIs
 
-* Place Order
-* Get Orders
+* Get user specific Order
+* Get all Orders
+* Create new order
 
 ### User APIs
 
-* Get User Details
-* Update User Information
+* Get all users
+* Get user by id
+* Update user information
 
 ---
 
@@ -102,18 +127,17 @@ Users can browse products, register/login securely, manage their cart, place ord
 * Home Page
 * Login Page
 * Register Page
+* Forgot Password Page
 * Cart Page
+* Checkout Page
 * Orders Page
 * Users Page
-* Forgot Password Page
 
 ---
 
 ## Future Improvements
 
 * Razorpay/Stripe Integration
-* Admin Dashboard
-* Product Search
 * Wishlist
 * Inventory Management
 * Order Tracking
