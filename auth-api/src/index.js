@@ -27,9 +27,9 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Auth API',
+      title: 'FastGrocery APIs',
       version: '1.0.0',
-      description: 'APIs created for FastGrocery app; contains: auth, cart, orders, products and admin related APIs.',
+      description: 'APIs created for FastGrocery app; contains: auth, cart, orders, products and user related APIs.',
     },
     servers: [{ url: `http://localhost:${process.env.PORT}` }],
     components: {

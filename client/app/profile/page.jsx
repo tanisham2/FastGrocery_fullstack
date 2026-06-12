@@ -110,7 +110,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#ede048" }}>
+    <div style={{ minHeight: "100vh", background: "#dec45b" }}>
 
       {/* Header */}
       <header style={{ background: "#010811", padding: "14px 24px", display: "flex", alignItems: "center", gap: "16px" }}>

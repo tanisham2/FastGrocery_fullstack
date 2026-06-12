@@ -441,7 +441,7 @@ export default function CheckoutPage() {
             <div style={{ padding: "20px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
               {[
                 { id: "COD", label: "Cash on Delivery", icon: "💵", desc: "Pay when your order arrives" },
-                { id: "Paytm", label: "Paytm", icon: "📱", desc: "Pay via Paytm wallet or UPI" },
+                { id: "Razorpay", label: "Razorpay", icon: "📱", desc: "Pay via Razorpay wallet or UPI" },
               ].map(({ id, label, icon, desc }) => (
                 <div key={id} onClick={() => setPaymentMethod(id)}
                   style={{
