@@ -29,7 +29,6 @@ export default function CheckoutPage() {
     const userId = localStorage.getItem("userId");
     if (!token) { router.push("/login"); return; }
 
-    // Read user data from localStorage first (instant)
     const cachedUser = {
       name: localStorage.getItem("userName") || "",
       email: localStorage.getItem("userEmail") || "",
@@ -38,7 +37,6 @@ export default function CheckoutPage() {
     };
     setUser(cachedUser);
 
-    // Pre-fill shipping with billing info
     setShipping(prev => ({
       ...prev,
       recipientName: cachedUser.name,
@@ -59,7 +57,6 @@ export default function CheckoutPage() {
       .catch(console.error)
       .finally(() => setLoading(false));
 
-    // Also fetch fresh user data from API in background
     if (userId) {
       fetch(`${API}/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -127,12 +124,14 @@ export default function CheckoutPage() {
         setPinMsg({ ok: true, text: `✓ ${po.Name}, ${po.District}, ${po.State}` });
         setCheckingPin(false);
         return true;
-      } else {
+      } 
+      else {
         setPinMsg({ ok: false, text: "✗ Invalid PIN code" });
         setCheckingPin(false);
         return false;
       }
-    } catch {
+    } 
+    catch {
       setPinMsg({ ok: false, text: "Unable to verify PIN code" });
       setCheckingPin(false);
       return false;
@@ -172,7 +171,7 @@ export default function CheckoutPage() {
       return sum + price * item.quantity;
     }, 0);
 
-    const fullAddress = `${shipping.recipientName}, ${shipping.mobile}, ${shipping.line1}${shipping.line2 ? ", " + shipping.line2 : ""}, ${shipping.city}, ${shipping.state} - ${shipping.pincode}`;
+    const fullAddress = `${shipping.recipientName}, ${shipping.mobile},  ${shipping.line1}${shipping.line2 ? ", " + shipping.line2 : ""}, ${shipping.city}, ${shipping.state} - ${shipping.pincode}`;
 
     try {
       const res = await fetch(`${API}/api/orders/checkout`, {
@@ -240,11 +239,12 @@ export default function CheckoutPage() {
           cursor: sameAsBilling && (name === "recipientName" || name === "mobile" || name === "line1") ? "not-allowed" : "text",
         }}
         onFocus={(e) => { if (!sameAsBilling) e.target.style.borderColor = "#1a6fe8"; }}
-        onBlurCapture={(e) => { if (name !== "pincode") e.target.style.borderColor = errors[name] ? "#e53e3e" : "#e0e0e0"; }}
+        onBlurCapture={(e) => { if (name !== "pincode") e.target.style.borderColor = 
+          errors[name] ? "#e53e3e" : "#e0e0e0"; }}
       />
       {errors[name] && <span style={{ fontSize: "12px", color: "#e53e3e" }}>{errors[name]}</span>}
       {name === "pincode" && pinMsg && (
-        <span style={{ fontSize: "12px", color: pinMsg.ok ? "#0c831f" : "#e53e3e", fontWeight: 500 }}>
+        <span style={{ fontSize: "12px", color: pinMsg.ok ? "#360ff7" : "#e53e3e", fontWeight: 500 }}>
           {checkingPin ? "Verifying..." : pinMsg.text}
         </span>
       )}
@@ -252,18 +252,20 @@ export default function CheckoutPage() {
   );
 
   if (loading) return (
-    <div style={{ minHeight: "100vh", background: "#fffde7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <div style={{ minHeight: "100vh", background: "#fffde7", display: "flex", alignItems: "center", 
+    justifyContent: "center" }}>
       <p style={{ color: "#888" }}>Loading checkout...</p>
     </div>
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#fffde7" }}>
+    <div style={{ minHeight: "100vh", background: "#dec45b" }}>
 
       {/* Header */}
-      <header style={{ background: "#1a6fe8", padding: "14px 32px", display: "flex", alignItems: "center", gap: "16px" }}>
+      <header style={{ background: "#00050c", padding: "14px 32px", display: "flex", alignItems: "center", gap: "16px" }}>
         <button onClick={() => router.push("/cart")}
-          style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", borderRadius: "8px", padding: "8px 14px", cursor: "pointer", fontSize: "14px", fontWeight: 600 }}>
+          style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", borderRadius: "8px", 
+          padding: "8px 14px", cursor: "pointer", fontSize: "14px", fontWeight: 600 }}>
           ← Back to Cart
         </button>
         <h1 style={{ margin: 0, fontSize: "20px", fontWeight: 800, color: "#fff" }}>Checkout</h1>
@@ -352,7 +354,8 @@ export default function CheckoutPage() {
                   {sameAsBilling && <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#fff" }} />}
                 </div>
                 <div>
-                  <p style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: sameAsBilling ? "#1a6fe8" : "#1a1a1a" }}>
+                  <p style={{ margin: 0, fontSize: "14px", fontWeight: 700, 
+                    color: sameAsBilling ? "#1a6fe8" : "#1a1a1a" }}>
                     Same as Billing Address
                   </p>
                   <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>
@@ -363,20 +366,23 @@ export default function CheckoutPage() {
 
               {/* Show saved address summary when same as billing */}
               {sameAsBilling ? (
-                <div style={{ background: "#f0f6ff", borderRadius: "10px", padding: "16px", border: "1px solid #d0e4ff" }}>
-                  <p style={{ margin: "0 0 8px", fontSize: "13px", fontWeight: 700, color: "#1a6fe8" }}>📦 Delivering to:</p>
-                  <p style={{ margin: "0 0 4px", fontSize: "14px", fontWeight: 600, color: "#1a1a1a" }}>{user?.name}</p>
-                  <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#555" }}>📱 {user?.phone || "Mobile not set"}</p>
-                  <p style={{ margin: 0, fontSize: "13px", color: "#555" }}>📍 {user?.address || "Address not set — please toggle to enter one"}</p>
+                <div style={{ background: "#f0f6ff", borderRadius: "10px", padding: "16px", 
+                border: "1px solid #d0e4ff" }}>
+                  <p style={{ margin: "0 0 8px", fontSize: "13px", fontWeight: 700, 
+                    color: "#1a6fe8" }}>📦 Delivering to:</p>
+                  <p style={{ margin: "0 0 4px", fontSize: "14px", fontWeight: 600, 
+                    color: "#1a1a1a" }}>{user?.name}</p>
+                  <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#555" }}> {user?.phone || "Mobile not set"}</p>
+                  <p style={{ margin: 0, fontSize: "13px", color: "#555" }}> {user?.address || "Address not set (please toggle to enter one)"} </p>
                   {(!user?.address || !user?.phone) && (
-                    <p style={{ margin: "10px 0 0", fontSize: "12px", color: "#e67e22", fontWeight: 600 }}>
+                    <p style={{ margin: "10px 0 0", fontSize: "12px", color: "#f80606", fontWeight: 600 }}>
                       ⚠ Some info is missing. Toggle off to enter manually, or update your profile.
                     </p>
                   )}
                   {/* PIN code required even for same as billing */}
                   <div style={{ marginTop: "14px", borderTop: "0.5px solid #c0d8ff", paddingTop: "14px" }}>
                     <label style={{ fontSize: "13px", fontWeight: 600, color: "#444", display: "block", marginBottom: "6px" }}>
-                      PIN Code <span style={{ color: "#e53e3e" }}>*</span> — required for delivery verification
+                      PIN Code <span style={{ color: "#e53e3e" }}>*</span> (required for delivery verification)
                     </label>
                     <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
                       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
@@ -417,7 +423,7 @@ export default function CheckoutPage() {
                         onFocus={(e) => e.target.style.borderColor = "#1a6fe8"}
                       />
                       {errors.pincode && <span style={{ fontSize: "12px", color: "#e53e3e" }}>{errors.pincode}</span>}
-                      {pinMsg && <span style={{ fontSize: "12px", color: pinMsg.ok ? "#0c831f" : "#e53e3e", fontWeight: 500 }}>{checkingPin ? "Verifying..." : pinMsg.text}</span>}
+                      {pinMsg && <span style={{ fontSize: "12px", color: pinMsg.ok ? "#0328f5" : "#e53e3e", fontWeight: 500 }}>{checkingPin ? "Verifying..." : pinMsg.text}</span>}
                     </div>
                     <ShippingField label="City" name="city" placeholder="City" required />
                     <ShippingField label="State" name="state" placeholder="State" required />
@@ -445,11 +451,14 @@ export default function CheckoutPage() {
                     display: "flex", alignItems: "center", gap: "14px",
                     transition: "all 0.15s",
                   }}>
-                  <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: paymentMethod === id ? "#1a6fe8" : "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>
+                  <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: 
+                    paymentMethod === id ? "#1a6fe8" : "#f0f0f0", display: "flex", alignItems: "center", 
+                    justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>
                     {icon}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ margin: "0 0 3px", fontSize: "15px", fontWeight: 700, color: paymentMethod === id ? "#1a6fe8" : "#1a1a1a" }}>{label}</p>
+                    <p style={{ margin: "0 0 3px", fontSize: "15px", fontWeight: 700, 
+                      color: paymentMethod === id ? "#1a6fe8" : "#1a1a1a" }}>{label}</p>
                     <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>{desc}</p>
                   </div>
                   <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: `2px solid ${paymentMethod === id ? "#1a6fe8" : "#ccc"}`, background: paymentMethod === id ? "#1a6fe8" : "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -473,17 +482,20 @@ export default function CheckoutPage() {
             {/* Items */}
             <div style={{ maxHeight: "320px", overflowY: "auto" }}>
               {cartItems.length === 0 ? (
-                <p style={{ padding: "20px", textAlign: "center", color: "#aaa", fontSize: "13px" }}>Loading items...</p>
+                <p style={{ padding: "20px", textAlign: "center", color: "#aaa", fontSize: "13px" }}>Loading items</p>
               ) : cartItems.map((item, i) => {
                 const product = item.productId || {};
                 const name = product.name || "Product";
                 const price = product.salePrice ?? product.price ?? item.price ?? 0;
                 const image = (product.images && product.images[0]) || product.imageUrl || null;
                 return (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px", borderBottom: "0.5px solid #f5f5f5" }}>
-                    <div style={{ width: "50px", height: "50px", background: "#f9f9f7", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" }}>
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px", 
+                  borderBottom: "0.5px solid #f5f5f5" }}>
+                    <div style={{ width: "50px", height: "50px", background: "#f9f9f7", borderRadius: "8px", 
+                      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" }}>
                       {image
-                        ? <img src={image} alt={name} style={{ width: "46px", height: "46px", objectFit: "contain" }} onError={(e) => { e.target.style.display = "none"; }} />
+                        ? <img src={image} alt={name} style={{ width: "46px", height: "46px", objectFit: "contain" }} 
+                        onError={(e) => { e.target.style.display = "none"; }} />
                         : <span style={{ fontSize: "24px" }}>🛍️</span>
                       }
                     </div>
@@ -504,12 +516,14 @@ export default function CheckoutPage() {
                 { label: "Delivery", value: "FREE", green: true },
                 { label: "Payment", value: paymentMethod },
               ].map(({ label, value, green }) => (
-                <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#555", marginBottom: "8px" }}>
+                <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", 
+                color: "#555", marginBottom: "8px" }}>
                   <span>{label}</span>
-                  <span style={{ color: green ? "#0c831f" : "#555", fontWeight: green ? 600 : 400 }}>{value}</span>
+                  <span style={{ color: green ? "#0323f1" : "#555", fontWeight: green ? 600 : 400 }}>{value}</span>
                 </div>
               ))}
-              <div style={{ borderTop: "1.5px solid #e8e8e8", paddingTop: "12px", marginTop: "4px", display: "flex", justifyContent: "space-between", fontSize: "18px", fontWeight: 800, color: "#1a1a1a" }}>
+              <div style={{ borderTop: "1.5px solid #e8e8e8", paddingTop: "12px", marginTop: "4px", 
+                display: "flex", justifyContent: "space-between", fontSize: "18px", fontWeight: 800, color: "#1a1a1a" }}>
                 <span>Total Payable</span>
                 <span style={{ color: "#1a6fe8" }}>₹{totalAmount}</span>
               </div>

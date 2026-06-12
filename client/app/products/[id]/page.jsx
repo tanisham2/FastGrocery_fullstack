@@ -159,14 +159,14 @@ const checkPincode = async () => {
   const visibleSimilar = similar.slice(similarStart, similarStart + SIM_VISIBLE);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#d5ca48" }}>
+    <div style={{ minHeight: "100vh", background: "#dec45b" }}>
 
       {/* Breadcrumb */}
-      <div style={{ background: "#fff", padding: "12px 32px", borderBottom: "0.5px solid #e8e8e8", 
+      <div style={{ background: "#f9f8f8", padding: "12px 32px", borderBottom: "0.5px solid #e8e8e8", 
         fontSize: "13px", color: "#888", display: "flex", gap: "6px", alignItems: "center" }}>
         <span onClick={() => router.push("/")} style={{ cursor: "pointer", color: "#0c70f2" }}>Home</span>
         <span>/</span>
-        <span style={{ cursor: "pointer", color: "#0748c1" }}>{product.category}</span>
+        <span style={{ cursor: "pointer", color: "#0c70f2" }}>{product.category}</span>
         <span>/</span>
         <span style={{ color: "#555" }}>{product.name}</span>
       </div>

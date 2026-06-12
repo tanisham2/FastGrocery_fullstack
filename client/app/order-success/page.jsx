@@ -20,11 +20,11 @@ export default function OrderSuccessPage() {
   });
 
   return (
-    <div style={{ minHeight: "100vh", background: "#fffde7", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+    <div style={{ minHeight: "100vh", background: "#dec45b", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
       <div style={{ background: "#fff", borderRadius: "20px", border: "0.5px solid #e8e8e8", maxWidth: "580px", width: "100%", overflow: "hidden" }}>
 
         {/* Success header */}
-        <div style={{ background: "linear-gradient(135deg, #1a6fe8, #0c831f)", padding: "40px 32px", textAlign: "center" }}>
+        <div style={{ background: "linear-gradient(135deg, #1a6fe8, #b9b0e7)", padding: "40px 32px", textAlign: "center" }}>
           <div style={{ fontSize: "72px", marginBottom: "12px", animation: "bounce 0.6s ease" }}>🎉</div>
           <h1 style={{ margin: "0 0 6px", fontSize: "26px", fontWeight: 800, color: "#fff" }}>Order Placed Successfully!</h1>
           <p style={{ margin: 0, fontSize: "14px", color: "rgba(255,255,255,0.8)" }}>Thank you for shopping with FastGrocery</p>
@@ -86,7 +86,7 @@ export default function OrderSuccessPage() {
           <div style={{ background: "#e8f5e9", borderRadius: "10px", padding: "12px 16px", marginBottom: "24px", display: "flex", alignItems: "center", gap: "10px" }}>
             <span style={{ fontSize: "24px" }}>⚡</span>
             <div>
-              <p style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "#0c831f" }}>Delivery in 10 minutes</p>
+              <p style={{ margin: 0, fontSize: "14px", fontWeight: 700, color: "#0a59f7" }}>Delivery in 10 minutes</p>
               <p style={{ margin: 0, fontSize: "12px", color: "#555" }}>Your order is being prepared</p>
             </div>
           </div>

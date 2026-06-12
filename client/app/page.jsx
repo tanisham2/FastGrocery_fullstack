@@ -115,7 +115,7 @@ const handleUpdateQty = async (productId, delta) => {
   }, 0);
 
   return (
-    <div style={{ minHeight: "200vh", background: "rgb(231, 231, 69)" }}>
+    <div style={{ minHeight: "200vh", background: "#dec45b" }}>
 
       {/* Full-width blue topbar */}
       <header style={{

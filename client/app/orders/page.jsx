@@ -46,7 +46,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#e8e80a" }}>
+    <div style={{ minHeight: "100vh", background: "#dec45b" }}>
 
       {/* Header */}
       <header style={{ background: "#000000", padding: "14px 24px", display: "flex", alignItems: "center", gap: "16px" }}>

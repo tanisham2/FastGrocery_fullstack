@@ -61,7 +61,7 @@ export default function ForgotPasswordPage() {
   <div
     style={{
       minHeight: '100vh',
-      background: '#f8d030',
+      background: '#dec45b',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -98,7 +98,7 @@ export default function ForgotPasswordPage() {
         }}
       >
         {step === 1 && 'Enter your email to receive an OTP.'}
-        {step === 2 && 'Enter the OTP and create a new password.'}
+        {step === 2 && 'Enter the OTP & Create a New Password.'}
         {step === 3 && 'Password updated successfully.'}
       </p>
 
@@ -106,7 +106,7 @@ export default function ForgotPasswordPage() {
         <div
           style={{
             background: '#f0fff4',
-            color: '#2f855a',
+            color: '#392f85',
             border: '1px solid #9ae6b4',
             padding: '12px',
             borderRadius: '8px',

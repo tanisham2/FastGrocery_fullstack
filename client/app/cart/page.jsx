@@ -65,7 +65,7 @@ export default function CartPage() {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f0e456" }}>
+    <div style={{ minHeight: "100vh", background: "#dec45b" }}>
 
       {/* Header */}
       <header style={{ background: "#0e0f10", padding: "14px 24px", display: "flex", alignItems: "center", gap: "16px" }}>

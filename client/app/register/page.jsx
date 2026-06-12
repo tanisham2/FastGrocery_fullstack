@@ -3,83 +3,51 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-function Field({
-  label,
-  name,
-  type = 'text',
-  placeholder,
-  hint,
-  form,
-  setForm,
-  errors,
-}) {
-  const commonStyle = {
-    width: '100%',
-    boxSizing: 'border-box',
-    padding: '12px 14px',
-    border: `1.5px solid ${errors[name] ? '#e53e3e' : '#e0e0e0'}`,
-    borderRadius: '8px',
-    fontSize: '14px',
-    outline: 'none',
-    color: '#333',
+function Field({label,name, type = 'text', placeholder, hint, form, setForm, errors, }) 
+{
+  const commonStyle = { width: '100%', boxSizing: 'border-box', padding: '12px 14px', border: `1.5px solid ${errors[name] ? '#e53e3e' : '#e0e0e0'}`,
+    borderRadius: '8px', fontSize: '14px', outline: 'none',color: '#333',
   };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-      <label
-        style={{
-          fontSize: '13px',
-          fontWeight: 600,
-          color: '#444',
-        }}
+      <label style={{ fontSize: '13px', fontWeight: 600, color: '#444', }}
       >
         {label}
       </label>
 
       {name === 'address' ? (
-        <textarea
-          rows={3}
-          placeholder={placeholder}
-          value={form[name]}
-          onChange={(e) =>
+        <textarea rows={3}   
+        placeholder={placeholder}
+        value={form[name]}
+        onChange={(e) =>
             setForm({ ...form, [name]: e.target.value })
           }
           style={{
-            ...commonStyle,
-            resize: 'vertical',
-            fontFamily: 'inherit',
+            ...commonStyle, resize: 'vertical', fontFamily: 'inherit',
           }}
         />
       ) : (
-        <input
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          value={form[name]}
-          onChange={(e) =>
-            setForm({ ...form, [name]: e.target.value })
+        <input 
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        value={form[name]}
+        onChange={(e) => setForm({ ...form, [name]: e.target.value })
           }
           style={commonStyle}
         />
       )}
 
       {errors[name] && (
-        <span
-          style={{
-            fontSize: '12px',
-            color: '#e53e3e',
-          }}
+        <span style={{ fontSize: '12px', color: '#e53e3e', }}
         >
           {errors[name]}
         </span>
       )}
 
       {hint && !errors[name] && (
-        <span
-          style={{
-            fontSize: '11px',
-            color: '#888',
-          }}
+        <span style={{ fontSize: '11px', color: '#888', }}
         >
           {hint}
         </span>
@@ -120,10 +88,11 @@ export default function RegisterPage() {
     }
 
     if (form.password.length < 6) {
-      e.password = 'Password must be at least 6 characters';
-    } else if (!/(?=.*[A-Z])/.test(form.password)) {
+      e.password = 'Password  MUST be at least 6 characters';
+    } 
+    else if (!/(?=.*[A-Z])/.test(form.password)) {
       e.password =
-        'Password must contain at least one uppercase letter';
+        'Password MUST contain at least one uppercase letter';
     }
 
     if (form.password !== form.confirmPassword) {
@@ -134,24 +103,20 @@ export default function RegisterPage() {
       e.address =
         'Please enter a valid address (minimum 10 characters)';
     }
-
     return e;
   };
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
-
     const e = validate();
 
     if (Object.keys(e).length) {
       setErrors(e);
       return;
     }
-
     setErrors({});
     setLoading(true);
     setServerError('');
-
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
@@ -169,61 +134,35 @@ export default function RegisterPage() {
           }),
         }
       );
-
       const data = await res.json();
-
       if (data.success) {
         router.push('/login');
-      } else {
+      } 
+      else {
         setServerError(
           data.message || 'Registration failed'
         );
       }
-    } catch (error) {
+    } 
+    catch (error) {
       setServerError('Unable to connect to server');
     }
-
     setLoading(false);
   };
 
   return (
-  <div
-    style={{
-      minHeight: '100vh',
-      display: 'flex',
-      background: '#f8d030',
-    }}
-  >
+  <div style={{minHeight: '100vh', display: 'flex', background: '#dec45b',}} >
+
     {/* LEFT SECTION */}
-    <div
-      style={{
-        flex: 0.75,
-        background: '#f8d030',
-        color: '#fff',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: '60px',
-      }}
+    <div style={{flex: 0.75, background: '#dec45b', color: '#fff', display: 'flex', flexDirection: 'column',
+    justifyContent: 'center', padding: '60px', }}
     >
-      <div
-        style={{
-          fontSize: '18px',
-          fontWeight: '700',
-          letterSpacing: '2px',
-          marginBottom: '20px',
-        }}
+      <div style={{ fontSize: '18px', fontWeight: '700', letterSpacing: '2px', marginBottom: '20px', }}
       >
         FAST • FRESH • RELIABLE
       </div>
 
-      <h1
-        style={{
-          fontSize: '56px',
-          fontWeight: '800',
-          lineHeight: '1.1',
-          margin: '0 0 20px 0',
-        }}
+      <h1 style={{ fontSize: '56px', fontWeight: '800', lineHeight: '1.1', margin: '0 0 20px 0', }}
       >
         Groceries
         <br />
@@ -396,15 +335,8 @@ export default function RegisterPage() {
             type="submit"
             disabled={loading}
             style={{
-              background: loading ? '#999' : '#1AA7A8',
-              color: '#fff',
-              border: 'none',
-              padding: '14px',
-              borderRadius: '10px',
-              fontSize: '16px',
-              fontWeight: '700',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              marginTop: '8px',
+              background: loading ? '#999' : '#1AA7A8', color: '#fff', border: 'none', padding: '14px', borderRadius: '10px',
+              fontSize: '16px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', marginTop: '8px',
             }}
           >
             {loading
@@ -413,21 +345,12 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <p
-          style={{
-            textAlign: 'center',
-            marginTop: '20px',
-            color: '#666',
+        <p  style={{ textAlign: 'center',marginTop: '20px', color: '#666',
           }}
         >
           Already have an account?{' '}
-          <a
-            href="/login"
-            style={{
-              color: '#1162cc',
-              fontWeight: '600',
-              textDecoration: 'none',
-            }}
+          <a href="/login"
+            style={{ color: '#1162cc', fontWeight: '600', textDecoration: 'none', }}
           >
             Login here
           </a>

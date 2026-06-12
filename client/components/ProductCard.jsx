@@ -10,7 +10,6 @@ export default function ProductCard({ product, qty, onAdd, onIncrease, onDecreas
   
   const router = useRouter();
 
-  // support both old price field and new realPrice/salePrice
   const displaySalePrice = salePrice ?? price ?? 0;
   const displayRealPrice = realPrice ?? price ?? 0;
   const hasDiscount = displayRealPrice > displaySalePrice;
