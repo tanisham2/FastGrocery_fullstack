@@ -35,7 +35,7 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'APIs created for FastGrocery app; contains: auth, cart, orders, products and user related APIs.',
     },
-    servers: [{ url: `http://localhost:${process.env.PORT}` }],
+    servers: [{ url: process.env.BASE_URL || `http://localhost:${process.env.PORT}` }],
     components: {
       securitySchemes: {
         bearerAuth: {
