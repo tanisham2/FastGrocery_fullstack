@@ -8,13 +8,17 @@ const productRoutes = require('./routes/product.routes');
 const cartRoutes = require('./routes/cart.routes');
 const orderRoutes = require('./routes/order.routes');
 const adminRoutes = require('./routes/admin.routes');
+const paymentRoutes = require('./routes/payment.routes');
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 const cors = require('cors');
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ 
+  origin:  process.env.CLIENT_URL || 'http://localhost:3000',
+  credentials: true,
+}));
 
 connectDB();
 
@@ -54,6 +58,9 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/payment', paymentRoutes);
+
+app.get('/', (req, res) => res.json({ message: 'FastGrocery API running' }));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
