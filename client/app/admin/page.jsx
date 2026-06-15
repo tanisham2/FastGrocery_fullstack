@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
+console.log("API =", API);
 const TABS = ["Dashboard", "Products", "Orders", "Users"];
 const STATUS_OPTIONS = ["pending", "confirmed", "delivered", "cancelled"];
 const CATEGORIES = ["Dairy", "Fruits", "Snacks", "Beverages", "Bakery", "Staples"];

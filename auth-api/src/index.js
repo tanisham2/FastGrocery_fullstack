@@ -16,7 +16,10 @@ const swaggerUi = require('swagger-ui-express');
 const app = express();
 const cors = require('cors');
 app.use(cors({ 
-  origin:  process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: [
+    "http://localhost:3000",
+    process.env.CLIENT_URL,
+  ],
   credentials: true,
 }));
 
@@ -35,7 +38,11 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'APIs created for FastGrocery app; contains: auth, cart, orders, products and user related APIs.',
     },
-    servers: [{ url: process.env.BASE_URL || `http://localhost:${process.env.PORT}` }],
+    servers: [
+      { 
+        url: process.env.BASE_URL || `http://localhost:${process.env.PORT}` 
+      },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {

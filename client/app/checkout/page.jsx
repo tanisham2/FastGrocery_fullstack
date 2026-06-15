@@ -88,7 +88,6 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  // When sameAsBilling toggles, sync shipping fields
   useEffect(() => {
     if (sameAsBilling && user) {
       setShipping({
@@ -155,43 +154,50 @@ export default function CheckoutPage() {
     return Object.keys(e).length === 0;
   };
 
-  const handlePlaceOrder = async () => {
-    if (!validateForm()) return;
-    setPlacingOrder(true);
-    const token = localStorage.getItem("token");
+const loadRazorpay = () => {
+  return new Promise((resolve) => {
+    if (window.Razorpay) { resolve(true); return; }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
-    const items = cartItems.map(item => ({
-      productId: item.productId?._id || item.productId,
-      quantity: item.quantity,
-      price: item.productId?.salePrice ?? item.productId?.price ?? item.price ?? 0,
-    }));
+const handlePlaceOrder = async () => {
+  if (!validateForm()) return;
+  setPlacingOrder(true);
+  const token = localStorage.getItem("token");
 
-    const totalAmount = cartItems.reduce((sum, item) => {
-      const price = item.productId?.salePrice ?? item.productId?.price ?? item.price ?? 0;
-      return sum + price * item.quantity;
-    }, 0);
+  const items = cartItems.map(item => ({
+    productId: item.productId?._id || item.productId,
+    quantity: item.quantity,
+    price: item.productId?.salePrice ?? item.productId?.price ?? item.price ?? 0,
+  }));
 
-    const fullAddress = `${shipping.recipientName}, ${shipping.mobile},  ${shipping.line1}${shipping.line2 ? ", " + shipping.line2 : ""}, ${shipping.city}, ${shipping.state} - ${shipping.pincode}`;
+  const totalAmount = cartItems.reduce((sum, item) => {
+    const price = item.productId?.salePrice ?? item.productId?.price ?? item.price ?? 0;
+    return sum + price * item.quantity;
+  }, 
+  0);
+  const fullAddress = `${shipping.recipientName}, ${shipping.mobile}, ${shipping.line1}${shipping.line2 ? ", " + shipping.line2 : ""}, ${shipping.city}, ${shipping.state} - ${shipping.pincode}`;
 
+  // COD flow 
+  if (paymentMethod === "COD") {
     try {
       const res = await fetch(`${API}/api/orders/checkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ items, totalAmount, address: fullAddress, paymentMethod }),
+        body: JSON.stringify({ items, totalAmount, address: fullAddress, paymentMethod: "COD" }),
       });
-
       if (res.ok) {
         const data = await res.json();
-        await fetch(`${API}/api/cart/clear`, {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
+        await fetch(`${API}/api/cart/clear`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } 
         });
         localStorage.setItem("lastOrder", JSON.stringify({
-          orderId: data.order?._id,
-          total: totalAmount,
-          address: fullAddress,
-          paymentMethod,
-          date: new Date().toISOString(),
+          orderId: data.order?._id, total: totalAmount, address: fullAddress,
+          paymentMethod: "COD", date: new Date().toISOString(),
           items: cartItems.map(item => ({
             name: item.productId?.name || "Product",
             qty: item.quantity,
@@ -199,15 +205,103 @@ export default function CheckoutPage() {
           })),
         }));
         router.push("/order-success");
-      } else {
+      } 
+      else {
         const err = await res.json();
-        alert(err.message || "Order placement failed");
+        alert(err.message || "Order failed");
       }
-    } catch {
-      alert("Something went wrong. Please try again.");
-    }
+    } 
+    catch { alert("Something went wrong"); }
     setPlacingOrder(false);
-  };
+    return;
+  }
+
+  // Razorpay flow
+  const loaded = await loadRazorpay();
+  if (!loaded) { alert("Razorpay failed to load. Check your internet."); setPlacingOrder(false); return; }
+
+  try {
+    // Step 1: Create Razorpay order
+    const orderRes = await fetch(`${API}/api/payment/create-order`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ amount: totalAmount }),
+    });
+    const orderData = await orderRes.json();
+    if (!orderData.success) { 
+      alert("Could not initiate payment"); 
+      setPlacingOrder(false); 
+      return; 
+    }
+
+    // Step 2: Open Razorpay checkout
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      amount: orderData.order.amount,
+      currency: "INR",
+      name: "FastGrocery",
+      description: "Order Payment",
+      order_id: orderData.order.id,
+      prefill: {
+        name: user?.name || "",
+        email: user?.email || "",
+        contact: shipping.mobile || user?.phone || "",
+      },
+      theme: { color: "#1a6fe8" },
+      handler: async (response) => {
+        // Step 3: Verify payment
+        const verifyRes = await fetch(`${API}/api/payment/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify(response),
+        });
+        const verifyData = await verifyRes.json();
+
+        if (verifyData.success) {
+          // Step 4: Create order in your database
+          const createRes = await fetch(`${API}/api/orders/checkout`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({
+              items, totalAmount, address: fullAddress,
+              paymentMethod: "Razorpay",
+              razorpayPaymentId: response.razorpay_payment_id,
+            }),
+          });
+          if (createRes.ok) {
+            const createData = await createRes.json();
+            await fetch(`${API}/api/cart/clear`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
+            localStorage.setItem("lastOrder", JSON.stringify({
+              orderId: createData.order?._id, total: totalAmount, address: fullAddress,
+              paymentMethod: "Razorpay (Online)", date: new Date().toISOString(),
+              items: cartItems.map(item => ({
+                name: item.productId?.name || "Product",
+                qty: item.quantity,
+                price: item.productId?.salePrice ?? item.productId?.price ?? 0,
+              })),
+            }));
+            router.push("/order-success");
+          }
+        } else {
+          alert("Payment verification failed. Please contact support.");
+        }
+        setPlacingOrder(false);
+      },
+      modal: {
+        ondismiss: () => {
+          alert("Payment cancelled.");
+          setPlacingOrder(false);
+        }
+      }
+    };
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } 
+  catch (err) {
+    alert("Payment failed: " + err.message);
+    setPlacingOrder(false);
+  }
+};
 
   const totalItems = cartItems.reduce((s, i) => s + i.quantity, 0);
   const totalAmount = cartItems.reduce((sum, item) => {
