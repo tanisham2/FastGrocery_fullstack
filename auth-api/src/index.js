@@ -15,11 +15,8 @@ const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 const cors = require('cors');
-app.use(cors({ 
-  origin: [
-    "http://localhost:3000",
-    process.env.CLIENT_URL,
-  ],
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true,
 }));
 

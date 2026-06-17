@@ -516,7 +516,7 @@ export default function AdminPage() {
 
                 <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
                   <button onClick={handleSaveProduct}
-                    style={{ background: "#2e0c83", color: "#fff", border: "none", borderRadius: "8px", 
+                    style={{ background: "#085fec", color: "#fff", border: "none", borderRadius: "8px", 
                     padding: "10px 24px", fontWeight: 700, cursor: "pointer" }}>
                     {editingProduct ? "Update Product" : "Add Product"}
                   </button>
@@ -612,6 +612,7 @@ export default function AdminPage() {
                                       realPrice: p.realPrice ?? p.price ?? "",
                                       salePrice: p.salePrice ?? p.price ?? "",
                                       category: p.category,
+                                      shortDescription: p.shortDescription || "",
                                       description: p.description || "",
                                       stock: p.stock,
                                       images: p.images || (p.imageUrl ? [p.imageUrl] : []),
@@ -839,7 +840,7 @@ function ImageFileUploader({ adminToken, onUploaded }) {
         background: uploading ? "#f0f0f0" : "#fff",
         border: "1.5px dashed #0b3de1", borderRadius: "8px",
         padding: "10px 16px", cursor: uploading ? "not-allowed" : "pointer",
-        fontSize: "13px", fontWeight: 600, color: "#7c0ee9",
+        fontSize: "13px", fontWeight: 600, color: "#0821da",
       }}>
         {uploading ? "⏳ Uploading..." : "📷 Choose Image File"}
         <input
