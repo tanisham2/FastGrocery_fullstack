@@ -65,7 +65,7 @@ export default function CartPage() {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#dec45b" }}>
+    <div style={{ minHeight: "100vh", background: "#F3FAF8" }}>
 
       {/* Header */}
       <header style={{ background: "#0e0f10", padding: "14px 24px", display: "flex", alignItems: "center", gap: "16px" }}>
@@ -127,16 +127,16 @@ export default function CartPage() {
                     {/* Info */}
                     <div style={{ flex: 1 }}>
                       <p style={{ fontSize: "15px", fontWeight: 600, color: "#1a1a1a", marginBottom: "4px" }}>{name}</p>
-                      <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a6fe8" }}>₹{price}</p>
+                      <p style={{ fontSize: "14px", fontWeight: 700, color: "#21969c" }}>₹{price}</p>
                     </div>
 
                     {/* Qty */}
-                    <div style={{ display: "flex", alignItems: "center", border: "1.5px solid #1a6fe8", borderRadius: "8px", overflow: "hidden" }}>
+                    <div style={{ display: "flex", alignItems: "center", border: "1.5px solid #21969c", borderRadius: "8px", overflow: "hidden" }}>
                       <button onClick={() => handleQty(productId, -1, item.quantity)}
-                        style={{ background: "#1a6fe8", color: "#fff", border: "none", width: "32px", height: "32px", fontSize: "18px", fontWeight: 700, cursor: "pointer" }}>−</button>
-                      <span style={{ width: "36px", textAlign: "center", fontSize: "14px", fontWeight: 700, color: "#1a6fe8" }}>{item.quantity}</span>
+                        style={{ background: "#21969c", color: "#fff", border: "none", width: "32px", height: "32px", fontSize: "18px", fontWeight: 700, cursor: "pointer" }}>−</button>
+                      <span style={{ width: "36px", textAlign: "center", fontSize: "14px", fontWeight: 700, color: "#21969c" }}>{item.quantity}</span>
                       <button onClick={() => handleQty(productId, 1, item.quantity)}
-                        style={{ background: "#1a6fe8", color: "#fff", border: "none", width: "32px", height: "32px", fontSize: "18px", fontWeight: 700, cursor: "pointer" }}>+</button>
+                        style={{ background: "#21969c", color: "#fff", border: "none", width: "32px", height: "32px", fontSize: "18px", fontWeight: 700, cursor: "pointer" }}>+</button>
                     </div>
 
                     {/* Subtotal */}
@@ -166,23 +166,23 @@ export default function CartPage() {
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", color: "#555" }}>
                   <span>Delivery</span>
-                  <span style={{ color: "#0c831f", fontWeight: 600 }}>FREE</span>
+                  <span style={{ color: "#ff1e00", fontWeight: 600 }}>FREE</span>
                 </div>
                 <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: "10px", display: "flex", justifyContent: "space-between", fontSize: "16px", fontWeight: 700, color: "#1a1a1a" }}>
                   <span>Total</span>
-                  <span style={{ color: "#1a6fe8" }}>₹{totalAmount}</span>
+                  <span style={{ color: "#21969c" }}>₹{totalAmount}</span>
                 </div>
               </div>
 
               {/* What's next hint */}
-              <div style={{ background: "#f0f6ff", borderRadius: "8px", padding: "10px 12px", marginBottom: "16px", fontSize: "12px", color: "#1a6fe8" }}>
+              <div style={{ background: "#f0f6ff", borderRadius: "8px", padding: "10px 12px", marginBottom: "16px", fontSize: "12px", color: "#21969c" }}>
                 📍 You'll enter your delivery address and payment method on the next page.
               </div>
 
               {/* Proceed to Checkout */}
               <button
                 onClick={() => router.push("/checkout")}
-                style={{ width: "100%", background: "#1a6fe8", color: "#fff", border: "none", borderRadius: "8px", padding: "14px", fontWeight: 700, fontSize: "15px", cursor: "pointer" }}
+                style={{ width: "100%", background: "#21969c", color: "#fff", border: "none", borderRadius: "8px", padding: "14px", fontWeight: 700, fontSize: "15px", cursor: "pointer" }}
               >
                 Proceed to Checkout →
               </button>

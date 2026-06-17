@@ -235,7 +235,7 @@ export default function AdminPage() {
               onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
               style={{ padding: "12px 14px", border: "1.5px solid #e0e0e0", borderRadius: "8px", fontSize: "14px", outline: "none" }} />
             {loginError && <p style={{ color: "#e53e3e", fontSize: "13px", margin: 0 }}>{loginError}</p>}
-            <button type="submit" style={{ background: "#0a3de6", color: "#fff", border: "none", borderRadius: "8px", padding: "13px", fontSize: "15px", fontWeight: 700, cursor: "pointer" }}>
+            <button type="submit" style={{ background: "#21969c", color: "#fff", border: "none", borderRadius: "8px", padding: "13px", fontSize: "15px", fontWeight: 700, cursor: "pointer" }}>
               Login
             </button>
           </form>
@@ -247,7 +247,7 @@ export default function AdminPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f0" }}>
       {/* Header */}
-      <header style={{ background: "#0777e6", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <header style={{ background: "#21969c", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ fontSize: "20px", fontWeight: 800, color: "#fff" }}>
           🛒 Fast<span style={{ color: "#f8d030" }}>Grocery</span>
           <span style={{ fontSize: "13px", fontWeight: 400, opacity: 0.8, marginLeft: "8px" }}>Admin</span>
@@ -326,7 +326,7 @@ export default function AdminPage() {
               </h2>
               <button
                 onClick={() => { resetForm(); setShowProductForm(true); }}
-                style={{ background: "#0325e9", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontWeight: 700, cursor: "pointer" }}
+                style={{ background: "#21969c", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", fontWeight: 700, cursor: "pointer" }}
               >
                 + Add Product
               </button>
@@ -516,7 +516,7 @@ export default function AdminPage() {
 
                 <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
                   <button onClick={handleSaveProduct}
-                    style={{ background: "#085fec", color: "#fff", border: "none", borderRadius: "8px", 
+                    style={{ background: "#21969c", color: "#fff", border: "none", borderRadius: "8px", 
                     padding: "10px 24px", fontWeight: 700, cursor: "pointer" }}>
                     {editingProduct ? "Update Product" : "Add Product"}
                   </button>
@@ -580,7 +580,7 @@ export default function AdminPage() {
                               <p style={{ margin: 0, fontSize: "11px", color: "#aaa" }}>ID: {p._id.slice(-6)}</p>
                             </td>
                             <td style={{ padding: "10px 16px" }}>
-                              <span style={{ background: "#e8f5e9", color: "#0e5bd7", fontSize: "12px", fontWeight: 600, 
+                              <span style={{ background: "#e8f5e9", color: "#21969c", fontSize: "12px", fontWeight: 600, 
                                 padding: "3px 10px", borderRadius: "999px" }}>{p.category}</span>
                             </td>
                             <td style={{ padding: "10px 16px" }}>
@@ -589,7 +589,7 @@ export default function AdminPage() {
                                 textDecoration: "line-through" }}>₹{realPrice}</div>}
                             </td>
                             <td style={{ padding: "10px 16px" }}>
-                              <span style={{ color: p.stock === 0 ? "#e53e3e" : p.stock <= 5 ? "#e67e22" : "#146ef4", 
+                              <span style={{ color: p.stock === 0 ? "#e53e3e" : p.stock <= 5 ? "#e67e22" : "#21969c", 
                                 fontWeight: 700 }}>{p.stock}</span>
                               <div style={{ fontSize: "11px", color: "#aaa" }}>
                                 {p.stock === 0 ? "Out of stock" : p.stock <= 5 ? "Low stock" : "In stock"}
@@ -620,7 +620,7 @@ export default function AdminPage() {
                                     setShowProductForm(true);
                                     window.scrollTo({ top: 0, behavior: "smooth" });
                                   }}
-                                  style={{ background: "#e3f2fd", color: "#1565c0", border: "none", 
+                                  style={{ background: "#e3f2fd", color: "#21969c", border: "none", 
                                   borderRadius: "6px", padding: "6px 12px", fontSize: "12px", fontWeight: 600, 
                                   cursor: "pointer" }}>
                                   Edit

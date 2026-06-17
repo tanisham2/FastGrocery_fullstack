@@ -332,7 +332,7 @@ const handlePlaceOrder = async () => {
           color: "#333", background: sameAsBilling && (name === "recipientName" || name === "mobile" || name === "line1") ? "#f5f5f5" : "#fff",
           cursor: sameAsBilling && (name === "recipientName" || name === "mobile" || name === "line1") ? "not-allowed" : "text",
         }}
-        onFocus={(e) => { if (!sameAsBilling) e.target.style.borderColor = "#1a6fe8"; }}
+        onFocus={(e) => { if (!sameAsBilling) e.target.style.borderColor = "#21969c"; }}
         onBlurCapture={(e) => { if (name !== "pincode") e.target.style.borderColor = 
           errors[name] ? "#e53e3e" : "#e0e0e0"; }}
       />
@@ -353,7 +353,7 @@ const handlePlaceOrder = async () => {
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: "#dec45b" }}>
+    <div style={{ minHeight: "100vh", background: "#F3FAF8" }}>
 
       {/* Header */}
       <header style={{ background: "#00050c", padding: "14px 32px", display: "flex", alignItems: "center", gap: "16px" }}>
@@ -388,7 +388,7 @@ const handlePlaceOrder = async () => {
 
           {/* 1. Billing Info */}
           <div style={{ background: "#fff", borderRadius: "14px", border: "0.5px solid #e8e8e8", overflow: "hidden" }}>
-            <div style={{ background: "#1a6fe8", padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ background: "#21969c", padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <h2 style={{ margin: 0, fontSize: "16px", fontWeight: 700, color: "#fff" }}>1. Billing Information</h2>
               <button onClick={() => router.push("/profile")}
                 style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", borderRadius: "6px", padding: "6px 14px", fontSize: "12px", cursor: "pointer", fontWeight: 600 }}>
@@ -421,7 +421,7 @@ const handlePlaceOrder = async () => {
 
           {/* 2. Shipping Address */}
           <div style={{ background: "#fff", borderRadius: "14px", border: "0.5px solid #e8e8e8", overflow: "hidden" }}>
-            <div style={{ background: "#1a6fe8", padding: "14px 20px" }}>
+            <div style={{ background: "#21969c", padding: "14px 20px" }}>
               <h2 style={{ margin: 0, fontSize: "16px", fontWeight: 700, color: "#fff" }}>2. Shipping Address</h2>
             </div>
             <div style={{ padding: "20px" }}>
@@ -432,7 +432,7 @@ const handlePlaceOrder = async () => {
                 style={{
                   display: "flex", alignItems: "center", gap: "12px",
                   background: sameAsBilling ? "#f0f6ff" : "#fff",
-                  border: `1.5px solid ${sameAsBilling ? "#1a6fe8" : "#e0e0e0"}`,
+                  border: `1.5px solid ${sameAsBilling ? "#21969c" : "#e0e0e0"}`,
                   borderRadius: "10px", padding: "14px 16px",
                   cursor: "pointer", marginBottom: "20px",
                   transition: "all 0.15s",
@@ -440,8 +440,8 @@ const handlePlaceOrder = async () => {
               >
                 <div style={{
                   width: "22px", height: "22px", borderRadius: "50%",
-                  border: `2px solid ${sameAsBilling ? "#1a6fe8" : "#ccc"}`,
-                  background: sameAsBilling ? "#1a6fe8" : "#fff",
+                  border: `2px solid ${sameAsBilling ? "#21969c" : "#ccc"}`,
+                  background: sameAsBilling ? "#21969c" : "#fff",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   flexShrink: 0,
                 }}>
@@ -449,7 +449,7 @@ const handlePlaceOrder = async () => {
                 </div>
                 <div>
                   <p style={{ margin: 0, fontSize: "14px", fontWeight: 700, 
-                    color: sameAsBilling ? "#1a6fe8" : "#1a1a1a" }}>
+                    color: sameAsBilling ? "#21969c" : "#1a1a1a" }}>
                     Same as Billing Address
                   </p>
                   <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>
@@ -463,7 +463,7 @@ const handlePlaceOrder = async () => {
                 <div style={{ background: "#f0f6ff", borderRadius: "10px", padding: "16px", 
                 border: "1px solid #d0e4ff" }}>
                   <p style={{ margin: "0 0 8px", fontSize: "13px", fontWeight: 700, 
-                    color: "#1a6fe8" }}>📦 Delivering to:</p>
+                    color: "#21969c" }}>📦 Delivering to:</p>
                   <p style={{ margin: "0 0 4px", fontSize: "14px", fontWeight: 600, 
                     color: "#1a1a1a" }}>{user?.name}</p>
                   <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#555" }}> {user?.phone || "Mobile not set"}</p>
@@ -486,7 +486,7 @@ const handlePlaceOrder = async () => {
                           onChange={(e) => { setShipping(prev => ({ ...prev, pincode: e.target.value.replace(/\D/g, "") })); setPinMsg(null); if (errors.pincode) setErrors(prev => ({ ...prev, pincode: "" })); }}
                           onBlur={handlePincodeBlur}
                           style={{ padding: "10px 12px", border: `1.5px solid ${errors.pincode ? "#e53e3e" : "#e0e0e0"}`, borderRadius: "8px", fontSize: "14px", outline: "none", width: "140px" }}
-                          onFocus={(e) => e.target.style.borderColor = "#1a6fe8"}
+                          onFocus={(e) => e.target.style.borderColor = "#21969c"}
                         />
                         {errors.pincode && <span style={{ fontSize: "12px", color: "#e53e3e" }}>{errors.pincode}</span>}
                         {pinMsg && <span style={{ fontSize: "12px", color: pinMsg.ok ? "#0c831f" : "#e53e3e", fontWeight: 500 }}>{checkingPin ? "Verifying..." : pinMsg.text}</span>}
@@ -514,10 +514,10 @@ const handlePlaceOrder = async () => {
                         onChange={(e) => { setShipping(prev => ({ ...prev, pincode: e.target.value.replace(/\D/g, "") })); setPinMsg(null); if (errors.pincode) setErrors(prev => ({ ...prev, pincode: "" })); }}
                         onBlur={handlePincodeBlur}
                         style={{ padding: "10px 12px", border: `1.5px solid ${errors.pincode ? "#e53e3e" : "#e0e0e0"}`, borderRadius: "8px", fontSize: "14px", outline: "none" }}
-                        onFocus={(e) => e.target.style.borderColor = "#1a6fe8"}
+                        onFocus={(e) => e.target.style.borderColor = "#21969c"}
                       />
                       {errors.pincode && <span style={{ fontSize: "12px", color: "#e53e3e" }}>{errors.pincode}</span>}
-                      {pinMsg && <span style={{ fontSize: "12px", color: pinMsg.ok ? "#0328f5" : "#e53e3e", fontWeight: 500 }}>{checkingPin ? "Verifying..." : pinMsg.text}</span>}
+                      {pinMsg && <span style={{ fontSize: "12px", color: pinMsg.ok ? "#21969c" : "#e53e3e", fontWeight: 500 }}>{checkingPin ? "Verifying..." : pinMsg.text}</span>}
                     </div>
                     <ShippingField label="City" name="city" placeholder="City" required />
                     <ShippingField label="State" name="state" placeholder="State" required />
@@ -529,7 +529,7 @@ const handlePlaceOrder = async () => {
 
           {/* 3. Payment Method */}
           <div style={{ background: "#fff", borderRadius: "14px", border: "0.5px solid #e8e8e8", overflow: "hidden" }}>
-            <div style={{ background: "#1a6fe8", padding: "14px 20px" }}>
+            <div style={{ background: "#21969c", padding: "14px 20px" }}>
               <h2 style={{ margin: 0, fontSize: "16px", fontWeight: 700, color: "#fff" }}>3. Payment Method</h2>
             </div>
             <div style={{ padding: "20px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
@@ -539,23 +539,23 @@ const handlePlaceOrder = async () => {
               ].map(({ id, label, icon, desc }) => (
                 <div key={id} onClick={() => setPaymentMethod(id)}
                   style={{
-                    border: paymentMethod === id ? "2px solid #1a6fe8" : "1.5px solid #e0e0e0",
+                    border: paymentMethod === id ? "2px solid #21969c" : "1.5px solid #e0e0e0",
                     borderRadius: "12px", padding: "16px", cursor: "pointer",
                     background: paymentMethod === id ? "#f0f6ff" : "#fff",
                     display: "flex", alignItems: "center", gap: "14px",
                     transition: "all 0.15s",
                   }}>
                   <div style={{ width: "44px", height: "44px", borderRadius: "50%", background: 
-                    paymentMethod === id ? "#1a6fe8" : "#f0f0f0", display: "flex", alignItems: "center", 
+                    paymentMethod === id ? "#21969c" : "#f0f0f0", display: "flex", alignItems: "center", 
                     justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>
                     {icon}
                   </div>
                   <div style={{ flex: 1 }}>
                     <p style={{ margin: "0 0 3px", fontSize: "15px", fontWeight: 700, 
-                      color: paymentMethod === id ? "#1a6fe8" : "#1a1a1a" }}>{label}</p>
+                      color: paymentMethod === id ? "#21969c" : "#1a1a1a" }}>{label}</p>
                     <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>{desc}</p>
                   </div>
-                  <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: `2px solid ${paymentMethod === id ? "#1a6fe8" : "#ccc"}`, background: paymentMethod === id ? "#1a6fe8" : "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: `2px solid ${paymentMethod === id ? "#21969c" : "#ccc"}`, background: paymentMethod === id ? "#21969c" : "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {paymentMethod === id && <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#fff" }} />}
                   </div>
                 </div>
@@ -613,13 +613,13 @@ const handlePlaceOrder = async () => {
                 <div key={label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", 
                 color: "#555", marginBottom: "8px" }}>
                   <span>{label}</span>
-                  <span style={{ color: green ? "#0323f1" : "#555", fontWeight: green ? 600 : 400 }}>{value}</span>
+                  <span style={{ color: green ? "#21969c" : "#555", fontWeight: green ? 600 : 400 }}>{value}</span>
                 </div>
               ))}
               <div style={{ borderTop: "1.5px solid #e8e8e8", paddingTop: "12px", marginTop: "4px", 
                 display: "flex", justifyContent: "space-between", fontSize: "18px", fontWeight: 800, color: "#1a1a1a" }}>
                 <span>Total Payable</span>
-                <span style={{ color: "#1a6fe8" }}>₹{totalAmount}</span>
+                <span style={{ color: "#21969c" }}>₹{totalAmount}</span>
               </div>
             </div>
           </div>
@@ -628,11 +628,11 @@ const handlePlaceOrder = async () => {
             onClick={handlePlaceOrder}
             disabled={placingOrder || (pinMsg && !pinMsg.ok)}
             style={{
-              width: "100%", background: placingOrder ? "#aaa" : "#1a6fe8",
-              color: "#fff", border: "none", borderRadius: "12px",
+              width: "100%", background: placingOrder ? "#aaa" : "#f8d030",
+              color: "#0a0000", border: "none", borderRadius: "12px",
               padding: "16px", fontSize: "17px", fontWeight: 800,
               cursor: placingOrder ? "not-allowed" : "pointer",
-              boxShadow: "0 4px 16px rgba(26,111,232,0.3)",
+              boxShadow: "0 4px 16px rgba(33, 150, 156, 0.3)",
             }}
           >
             {placingOrder ? "Placing Order..." : `Place Order • ₹${totalAmount}`}
