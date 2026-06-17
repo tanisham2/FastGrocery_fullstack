@@ -37,9 +37,9 @@ const productSchema = new mongoose.Schema(
       min: 0,           //stock must be a positive number
     },
     images: { 
-      type: [String], 
+      type: [String],   //multiple images can be stored as an array
       default: [] 
-    },      // multiple images array
+    },      
     imageUrl: { 
       type: String, 
       default: '' 

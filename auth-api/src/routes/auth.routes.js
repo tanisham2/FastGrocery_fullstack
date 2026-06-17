@@ -32,7 +32,7 @@ const validate = require('../middlewares/validate');
  *                 example: Tanisha
  *               email:
  *                 type: string
- *                 example: tanisha2@example.com
+ *                 example: tanisha00002@gmail.com
  *               password:
  *                 type: string
  *                 example: pass123
@@ -62,7 +62,7 @@ router.post('/register', validate(['name', 'email', 'password']), register);
  *             properties:
  *               email:
  *                 type: string
- *                 example: tanisha2@example.com
+ *                 example: tanisha00002@gmail.com
  *               password:
  *                 type: string
  *                 example: pass123
@@ -91,7 +91,7 @@ router.post('/login', validate(['email', 'password']), login);
  *             properties:
  *               email:
  *                 type: string
- *                 example: tanisha2@example.com
+ *                 example: tanisha00002@gmail.com
  *     responses:
  *       200:
  *         description: OTP sent to email
@@ -120,7 +120,7 @@ router.post('/forget-password', validate(['email']), forgetPassword);
  *             properties:
  *                email:
  *                 type: string
- *                 example: tanisha2@example.com
+ *                 example: tanisha00002@gmail.com
  *                otp:
  *                 type: string
  *                 example: "482910"

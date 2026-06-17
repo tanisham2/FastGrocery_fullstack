@@ -12,11 +12,15 @@ const paymentRoutes = require('./routes/payment.routes');
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-
-const app = express();
 const cors = require('cors');
+const app = express();
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    process.env.CLIENT_URL,
+    'https://fastgrocery-api.onrender.com'
+  ],
   credentials: true,
 }));
 
